@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/public_issues.css' %}">
+
+<section class="public-issues">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>{% trans "Public Issues" %}</h1>
+        <p>{% trans "Transparent view of issues reported by citizens" %}</p>
+    </div>
+
+    <!-- Filters -->
+    <form method="GET" class="filters">
+
+        <select name="category" onchange="this.form.submit()">
+            <option value="">{% trans "All Categories" %}</option>
+            <option value="road" {% if request.GET.category == "road" %}selected{% endif %}>
+                {% trans "Road & Potholes" %}
+            </option>
+            <option value="water" {% if request.GET.category == "water" %}selected{% endif %}>
+                {% trans "Water Supply" %}
+            </option>
+            <option value="electricity" {% if request.GET.category == "electricity" %}selected{% endif %}>
+                {% trans "Electricity" %}
+            </option>
+            <option value="garbage" {% if request.GET.category == "garbage" %}selected{% endif %}>
+                {% trans "Garbage & Sanitation" %}
+            </option>
+            <option value="street" {% if request.GET.category == "street" %}selected{% endif %}>
+                {% trans "Street Lights" %}
+            </option>
+        </select>
+
+        <select name="status" onchange="this.form.submit()">
+            <option value="">{% trans "All Status" %}</option>
+            <option value="pending" {% if request.GET.status == "pending" %}selected{% endif %}>
+                {% trans "Pending" %}
+            </option>
+            <option value="in_progress" {% if request.GET.status == "in_progress" %}selected{% endif %}>
+                {% trans "In Progress" %}
+            </option>
+            <option value="resolved" {% if request.GET.status == "resolved" %}selected{% endif %}>
+                {% trans "Resolved" %}
+            </option>
+        </select>
+
+    </form>
+
+    <!-- Issues Grid -->
+    <div class="issues-grid">
+
+        {% for issue in issues %}
+        <div class="issue-card">
+
+            <div class="issue-top">
+                <h3>{{ issue.title }}</h3>
+                <span class="status {{ issue.status|lower }}">
+                    {{ issue.get_status_display }}
+                </span>
+            </div>
+
+            <p class="meta">
+                <strong>{% trans "Category:" %}</strong>
+                {{ issue.get_category_display }}
+            </p>
+
+            <p class="meta">
+                <strong>{% trans "Location:" %}</strong>
+                {{ issue.district }}, {{ issue.state }}
+            </p>
+
+            <p class="meta">
+                <strong>{% trans "Reported:" %}</strong>
+                {{ issue.created_at|date:"d M Y" }}
+            </p>
+
+            <a href="#" class="details-btn">
+                {% trans "View Details" %}
+            </a>
+        </div>
+
+        {% empty %}
+        <p class="no-data">{% trans "No public issues available." %}</p>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

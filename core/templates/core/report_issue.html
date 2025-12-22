@@ -1,0 +1,190 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/report_issue.css' %}">
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="report-header">
+  <h1>{% trans "Report an Issue" %}</h1>
+  <p>{% trans "Your complaint creates change. Let’s make it visible." %}</p>
+</section>
+
+<!-- ============ FORM CARD ============ -->
+<section class="report-wrapper">
+  <form method="POST" enctype="multipart/form-data" class="report-card">
+    {% csrf_token %}
+
+    <div class="form-group">
+  <label>{% trans "Full Name" %}</label>
+  <input
+    type="text"
+    name="full_name"
+    placeholder="{% trans 'Enter your full name' %}"
+    required
+  />
+</div>
+
+  <div class="form-group">
+  <label>{% trans "Phone Number" %}</label>
+
+  <div style="display:flex; gap:8px;">
+    <input
+      type="text"
+      value="+91"
+      readonly
+      style="width:60px; text-align:center;"
+    />
+    <input
+      type="tel"
+      name="phone"
+      placeholder="{% trans '10-digit mobile number' %}"
+      pattern="[6-9]{1}[0-9]{9}"
+      maxlength="10"
+      required
+    />
+  </div>
+
+  <small style="color:#666;">
+    {% trans "Only Indian mobile numbers allowed" %}
+  </small>
+</div>
+
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>{% trans "Issue Category" %}</label>
+        <select name="category" required>
+          <option value="">{% trans "Select category" %}</option>
+          <option value="road">{% trans "Road & Potholes" %}</option>
+          <option value="water">{% trans "Water Supply" %}</option>
+          <option value="electricity">{% trans "Electricity" %}</option>
+          <option value="garbage">{% trans "Garbage & Sanitation" %}</option>
+          <option value="street">{% trans "Street Lights" %}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>{% trans "Urgency" %}</label>
+        <select name="urgency" required>
+          <option value="">{% trans "Select urgency" %}</option>
+          <option value="low">{% trans "Low" %}</option>
+          <option value="medium">{% trans "Medium" %}</option>
+          <option value="high">{% trans "High" %}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>{% trans "Issue Title" %}</label>
+      <input
+        type="text"
+        name="title"
+        placeholder="{% trans 'Short title of the problem' %}"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>{% trans "Issue Description" %}</label>
+      <textarea
+        name="description"
+        placeholder="{% trans 'Explain the issue clearly...' %}"
+        required
+      ></textarea>
+    </div>
+
+    <!-- States -->
+    <div class="form-group">
+      <label>{% trans "State / Union Territory" %}</label>
+      <select name="state" id="state" required>
+        <option value="">{% trans "Select state / UT" %}</option>
+
+        <option value="AP">{% trans "Andhra Pradesh" %}</option>
+        <option value="AR">{% trans "Arunachal Pradesh" %}</option>
+        <option value="AS">{% trans "Assam" %}</option>
+        <option value="BR">{% trans "Bihar" %}</option>
+        <option value="CT">{% trans "Chhattisgarh" %}</option>
+        <option value="GA">{% trans "Goa" %}</option>
+        <option value="GJ">{% trans "Gujarat" %}</option>
+        <option value="HR">{% trans "Haryana" %}</option>
+        <option value="HP">{% trans "Himachal Pradesh" %}</option>
+        <option value="JH">{% trans "Jharkhand" %}</option>
+        <option value="KA">{% trans "Karnataka" %}</option>
+        <option value="KL">{% trans "Kerala" %}</option>
+        <option value="MP">{% trans "Madhya Pradesh" %}</option>
+        <option value="MH">{% trans "Maharashtra" %}</option>
+        <option value="MN">{% trans "Manipur" %}</option>
+        <option value="ML">{% trans "Meghalaya" %}</option>
+        <option value="MZ">{% trans "Mizoram" %}</option>
+        <option value="NL">{% trans "Nagaland" %}</option>
+        <option value="OR">{% trans "Odisha" %}</option>
+        <option value="PB">{% trans "Punjab" %}</option>
+        <option value="RJ">{% trans "Rajasthan" %}</option>
+        <option value="SK">{% trans "Sikkim" %}</option>
+        <option value="TN">{% trans "Tamil Nadu" %}</option>
+        <option value="TG">{% trans "Telangana" %}</option>
+        <option value="TR">{% trans "Tripura" %}</option>
+        <option value="UP">{% trans "Uttar Pradesh" %}</option>
+        <option value="UT">{% trans "Uttarakhand" %}</option>
+        <option value="WB">{% trans "West Bengal" %}</option>
+
+        <!-- Union Territories -->
+        <option value="AN">{% trans "Andaman and Nicobar Islands" %}</option>
+        <option value="CH">{% trans "Chandigarh" %}</option>
+        <option value="DN">{% trans "Dadra and Nagar Haveli and Daman and Diu" %}</option>
+        <option value="DL">{% trans "Delhi" %}</option>
+        <option value="JK">{% trans "Jammu and Kashmir" %}</option>
+        <option value="LA">{% trans "Ladakh" %}</option>
+        <option value="LD">{% trans "Lakshadweep" %}</option>
+        <option value="PY">{% trans "Puducherry" %}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{% trans "District" %}</label>
+      <input
+        type="text"
+        name="district"
+        id="district"
+        placeholder="{% trans 'District' %}"
+        readonly
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>{% trans "Area / Locality" %}</label>
+      <select name="location" id="location" required>
+        <option value="">{% trans "Select area" %}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{% trans "Pincode" %}</label>
+      <input
+        type="text"
+        name="pincode"
+        placeholder="{% trans 'Enter pincode' %}"
+        required
+      />
+    </div>
+
+    <div class="upload-box">
+      <input type="file" name="photo" />
+      <p>{% trans "Upload a clear photo (optional)" %}</p>
+    </div>
+
+    <div class="form-footer">
+      <span>{% trans "Your identity stays private" %}</span>
+      <button type="submit">{% trans "Submit Issue" %}</button>
+    </div>
+
+  </form>
+</section>
+
+<script src="{% static 'Javascript/pincode_autofill.js' %}"></script>
+
+{% endblock %}

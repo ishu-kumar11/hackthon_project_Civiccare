@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>
+      {% trans "Report Local Problems." %}<br>
+      <span>{% trans "Get Real Solutions." %}</span>
+    </h1>
+
+    <p>
+  {% trans "A transparent platform where citizens report issues like roads, water, electricity, and sanitation — and track how authorities resolve them." %}
+</p>
+
+
+
+    <div class="hero-buttons">
+      <button class="btn-primary"
+              onclick="window.location.href='{% url 'report_issue' %}'">
+        {% trans "Report an Issue" %}
+      </button>
+
+      <button class="btn-secondary"
+              onclick="window.location.href='{% url 'public_issues' %}'">
+        {% trans "View Public Issues" %}
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <h3>{% trans "Why CivicCare?" %}</h3>
+    <ul>
+      <li>✔ {% trans "Direct issue forwarding to authorities" %}</li>
+      <li>✔ {% trans "Live status tracking" %}</li>
+      <li>✔ {% trans "Public transparency" %}</li>
+      <li>✔ {% trans "Faster resolution" %}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <h2>{% trans "How It Works" %}</h2>
+  <p>{% trans "Simple steps. Real impact." %}</p>
+
+  <div class="steps">
+    <div class="step">
+      <h3>{% trans "1. Report" %}</h3>
+      <p>{% trans "Submit an issue with location, photo, and description." %}</p>
+    </div>
+
+    <div class="step">
+      <h3>{% trans "2. Verify" %}</h3>
+      <p>{% trans "Authorities receive and verify the complaint." %}</p>
+    </div>
+
+    <div class="step">
+      <h3>{% trans "3. Resolve" %}</h3>
+      <p>{% trans "The issue is assigned and worked on." %}</p>
+    </div>
+
+    <div class="step">
+      <h3>{% trans "4. Track" %}</h3>
+      <p>{% trans "Citizens track progress until closure." %}</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>{% trans "Your Voice Matters" %}</h2>
+  <p>{% trans "Be part of a smarter, more responsible governance system." %}</p>
+
+  <button onclick="window.location.href='{% url 'report_issue' %}'">
+    {% trans "Start Reporting Now" %}
+  </button>
+</section>
+
+{% endblock %}

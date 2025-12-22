@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<section style="
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ec4899, #60a5fa);
+">
+
+  <div style="
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+  ">
+
+    <h2>🎉 {% trans "Issue Submitted Successfully!" %}</h2>
+
+    <p>{% trans "Your complaint has been registered." %}</p>
+
+    <h3 style="margin: 20px 0;">
+      {% trans "Complaint ID:" %} <br>
+      <span style="color: #2563eb;">{{ complaint_id }}</span>
+    </h3>
+
+    <p>{% trans "Please save this ID to track your issue." %}</p>
+
+    <a href="{% url 'home' %}">
+      <button style="
+        margin-top: 20px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 12px;
+        background: #2563eb;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      ">
+        {% trans "Go to Home" %}
+      </button>
+    </a>
+
+  </div>
+
+</section>
+
+{% endblock %}

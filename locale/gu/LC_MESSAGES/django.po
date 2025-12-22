@@ -1,0 +1,538 @@
+# Gujarati translations for CivicCare
+msgid ""
+msgstr ""
+"Project-Id-Version: CivicCare\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-21 11:08+0530\n"
+"Language: gu\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\core\templates\core\base.html:11
+msgid "CivicCare | Citizen Issue Reporting System"
+msgstr "સિવિકકેર | નાગરિક સમસ્યા રિપોર્ટિંગ સિસ્ટમ"
+
+#: .\core\templates\core\base.html:23
+msgid "Team Youth"
+msgstr "ટીમ યુથ"
+
+#: .\core\templates\core\base.html:26
+msgid "Home"
+msgstr "મુખ્ય પૃષ્ઠ"
+
+#: .\core\templates\core\base.html:27
+msgid "Report Issue"
+msgstr "સમસ્યા રિપોર્ટ કરો"
+
+#: .\core\templates\core\base.html:28
+msgid "Track Status"
+msgstr "સ્થિતિ ટ્રેક કરો"
+
+#: .\core\templates\core\base.html:49
+msgid "CivicCare"
+msgstr "સિવિકકેર"
+
+#: .\core\templates\core\base.html:49
+msgid "Citizen Issue Reporting System"
+msgstr "નાગરિક સમસ્યા રિપોર્ટિંગ સિસ્ટમ"
+
+# ================= HOME PAGE =================
+#: .\core\templates\core\index.html:10
+msgid "Report Local Problems."
+msgstr "સ્થાનિક સમસ્યાઓ રિપોર્ટ કરો."
+
+#: .\core\templates\core\index.html:11
+msgid "Get Real Solutions."
+msgstr "વાસ્તવિક ઉકેલો મેળવો."
+
+#: .\core\templates\core\index.html:15
+msgid ""
+"A transparent platform where citizens report issues like roads, water, "
+"electricity, and sanitation — and track how authorities resolve them."
+msgstr ""
+"એક પારદર્શક પ્લેટફોર્મ જ્યાં નાગરિકો રસ્તા, પાણી, વીજળી અને સ્વચ્છતા જેવી સમસ્યાઓ રિપોર્ટ "
+"કરે છે અને સત્તાવાળાઓ કેવી રીતે ઉકેલ આપે છે તે ટ્રેક કરે છે."
+
+#: .\core\templates\core\index.html:23
+#: .\core\templates\core\report_issue.html:11
+msgid "Report an Issue"
+msgstr "સમસ્યા રિપોર્ટ કરો"
+
+#: .\core\templates\core\index.html:28
+msgid "View Public Issues"
+msgstr "જાહેર સમસ્યાઓ જુઓ"
+
+#: .\core\templates\core\index.html:34
+msgid "Why CivicCare?"
+msgstr "સિવિકકેર કેમ?"
+
+#: .\core\templates\core\index.html:36
+msgid "Direct issue forwarding to authorities"
+msgstr "સમસ્યાઓ સીધી સત્તાવાળાઓ સુધી પહોંચે છે"
+
+#: .\core\templates\core\index.html:37
+msgid "Live status tracking"
+msgstr "લાઈવ સ્થિતિ ટ્રેકિંગ"
+
+#: .\core\templates\core\index.html:38
+msgid "Public transparency"
+msgstr "જાહેર પારદર્શિતા"
+
+#: .\core\templates\core\index.html:39
+msgid "Faster resolution"
+msgstr "ઝડપી ઉકેલ"
+
+#: .\core\templates\core\index.html:46
+msgid "How It Works"
+msgstr "આ કેવી રીતે કાર્ય કરે છે"
+
+#: .\core\templates\core\index.html:47
+msgid "Simple steps. Real impact."
+msgstr "સરળ પગલાં. વાસ્તવિક અસર."
+
+#: .\core\templates\core\index.html:51
+msgid "1. Report"
+msgstr "1. રિપોર્ટ કરો"
+
+#: .\core\templates\core\index.html:52
+msgid "Submit an issue with location, photo, and description."
+msgstr "સ્થળ, ફોટો અને વર્ણન સાથે સમસ્યા સબમિટ કરો."
+
+#: .\core\templates\core\index.html:56
+msgid "2. Verify"
+msgstr "2. ચકાસણી"
+
+#: .\core\templates\core\index.html:57
+msgid "Authorities receive and verify the complaint."
+msgstr "સત્તાવાળાઓ ફરિયાદ મેળવે છે અને તેની ચકાસણી કરે છે."
+
+#: .\core\templates\core\index.html:61
+msgid "3. Resolve"
+msgstr "3. ઉકેલ"
+
+#: .\core\templates\core\index.html:62
+msgid "The issue is assigned and worked on."
+msgstr "સમસ્યા સોંપવામાં આવે છે અને તેનો ઉકેલ કરવામાં આવે છે."
+
+#: .\core\templates\core\index.html:66
+msgid "4. Track"
+msgstr "4. ટ્રેક કરો"
+
+#: .\core\templates\core\index.html:67
+msgid "Citizens track progress until closure."
+msgstr "નાગરિકો સમસ્યા પૂર્ણ થાય ત્યાં સુધી પ્રગતિ ટ્રેક કરે છે."
+
+#: .\core\templates\core\index.html:74
+msgid "Your Voice Matters"
+msgstr "તમારો અવાજ મહત્વપૂર્ણ છે"
+
+#: .\core\templates\core\index.html:75
+msgid "Be part of a smarter, more responsible governance system."
+msgstr "વધુ સમજદાર અને જવાબદાર શાસન વ્યવસ્થાનો ભાગ બનો."
+
+#: .\core\templates\core\index.html:78
+msgid "Start Reporting Now"
+msgstr "હમણાં રિપોર્ટ કરવાનું શરૂ કરો"
+
+# ================= PUBLIC ISSUES =================
+#: .\core\templates\core\public_issues.html:13
+msgid "Public Issues"
+msgstr "જાહેર સમસ્યાઓ"
+
+#: .\core\templates\core\public_issues.html:14
+msgid "Transparent view of issues reported by citizens"
+msgstr "નાગરિકો દ્વારા રિપોર્ટ કરેલી સમસ્યાઓનો પારદર્શક દ્રશ્ય"
+
+#: .\core\templates\core\public_issues.html:21
+msgid "All Categories"
+msgstr "બધી કેટેગરી"
+
+#: .\core\templates\core\public_issues.html:23
+#: .\core\templates\core\report_issue.html:61
+msgid "Road & Potholes"
+msgstr "રસ્તા અને ખાડા"
+
+#: .\core\templates\core\public_issues.html:26
+#: .\core\templates\core\report_issue.html:62
+msgid "Water Supply"
+msgstr "પાણી પુરવઠો"
+
+#: .\core\templates\core\public_issues.html:29
+#: .\core\templates\core\report_issue.html:63
+msgid "Electricity"
+msgstr "વીજળી"
+
+#: .\core\templates\core\public_issues.html:32
+#: .\core\templates\core\report_issue.html:64
+msgid "Garbage & Sanitation"
+msgstr "કચરો અને સ્વચ્છતા"
+
+#: .\core\templates\core\public_issues.html:35
+#: .\core\templates\core\report_issue.html:65
+msgid "Street Lights"
+msgstr "સ્ટ્રીટ લાઈટ"
+
+#: .\core\templates\core\public_issues.html:40
+msgid "All Status"
+msgstr "બધી સ્થિતિ"
+
+#: .\core\templates\core\public_issues.html:42
+msgid "Pending"
+msgstr "બાકી"
+
+#: .\core\templates\core\public_issues.html:45
+msgid "In Progress"
+msgstr "ચાલુ છે"
+
+#: .\core\templates\core\public_issues.html:48
+msgid "Resolved"
+msgstr "ઉકેલાયું"
+
+#: .\core\templates\core\public_issues.html:68
+#: .\core\templates\core\track_issue.html:56
+msgid "Category:"
+msgstr "શ્રેણી:"
+
+#: .\core\templates\core\public_issues.html:73
+msgid "Location:"
+msgstr "સ્થળ:"
+
+#: .\core\templates\core\public_issues.html:78
+msgid "Reported:"
+msgstr "રિપોર્ટ થયેલ:"
+
+#: .\core\templates\core\public_issues.html:83
+msgid "View Details"
+msgstr "વિગતો જુઓ"
+
+#: .\core\templates\core\public_issues.html:88
+msgid "No public issues available."
+msgstr "કોઈ જાહેર સમસ્યાઓ ઉપલબ્ધ નથી."
+
+# ================= REPORT ISSUE =================
+#: .\core\templates\core\report_issue.html:12
+msgid "Your complaint creates change. Let’s make it visible."
+msgstr "તમારી ફરિયાદ બદલાવ લાવે છે. તેને દેખાડીએ."
+
+#: .\core\templates\core\report_issue.html:21
+msgid "Full Name"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:25
+msgid "Enter your full name"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:31
+msgid "Phone Number"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:43
+msgid "10-digit mobile number"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:51
+msgid "Only Indian mobile numbers allowed"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:58
+msgid "Issue Category"
+msgstr "સમસ્યાની કેટેગરી"
+
+#: .\core\templates\core\report_issue.html:60
+msgid "Select category"
+msgstr "કેટેગરી પસંદ કરો"
+
+#: .\core\templates\core\report_issue.html:70
+msgid "Urgency"
+msgstr "તાત્કાલિકતા"
+
+#: .\core\templates\core\report_issue.html:72
+msgid "Select urgency"
+msgstr "તાત્કાલિકતા પસંદ કરો"
+
+#: .\core\templates\core\report_issue.html:73
+msgid "Low"
+msgstr "ઓછી"
+
+#: .\core\templates\core\report_issue.html:74
+msgid "Medium"
+msgstr "મધ્યમ"
+
+#: .\core\templates\core\report_issue.html:75
+msgid "High"
+msgstr "ઉચ્ચ"
+
+#: .\core\templates\core\report_issue.html:81
+msgid "Issue Title"
+msgstr "સમસ્યાનું શીર્ષક"
+
+#: .\core\templates\core\report_issue.html:85
+msgid "Short title of the problem"
+msgstr "સમસ્યાનું ટૂંકું શીર્ષક"
+
+#: .\core\templates\core\report_issue.html:91
+msgid "Issue Description"
+msgstr "સમસ્યાનું વર્ણન"
+
+#: .\core\templates\core\report_issue.html:94
+msgid "Explain the issue clearly..."
+msgstr "સમસ્યાને સ્પષ્ટ રીતે સમજાવો..."
+
+#: .\core\templates\core\report_issue.html:101
+msgid "State / Union Territory"
+msgstr "રાજ્ય / કેન્દ્રશાસિત પ્રદેશ"
+
+#: .\core\templates\core\report_issue.html:103
+msgid "Select state / UT"
+msgstr "રાજ્ય / યુટી પસંદ કરો"
+
+#: .\core\templates\core\report_issue.html:105
+msgid "Andhra Pradesh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:106
+msgid "Arunachal Pradesh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:107
+msgid "Assam"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:108
+msgid "Bihar"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:109
+msgid "Chhattisgarh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:110
+msgid "Goa"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:111
+msgid "Gujarat"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:112
+msgid "Haryana"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:113
+msgid "Himachal Pradesh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:114
+msgid "Jharkhand"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:115
+msgid "Karnataka"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:116
+msgid "Kerala"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:117
+msgid "Madhya Pradesh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:118
+msgid "Maharashtra"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:119
+msgid "Manipur"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:120
+msgid "Meghalaya"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:121
+msgid "Mizoram"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:122
+msgid "Nagaland"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:123
+msgid "Odisha"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:124
+msgid "Punjab"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:125
+msgid "Rajasthan"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:126
+msgid "Sikkim"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:127
+msgid "Tamil Nadu"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:128
+msgid "Telangana"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:129
+msgid "Tripura"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:130
+msgid "Uttar Pradesh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:131
+msgid "Uttarakhand"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:132
+msgid "West Bengal"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:135
+msgid "Andaman and Nicobar Islands"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:136
+msgid "Chandigarh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:137
+msgid "Dadra and Nagar Haveli and Daman and Diu"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:138
+msgid "Delhi"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:139
+msgid "Jammu and Kashmir"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:140
+msgid "Ladakh"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:141
+msgid "Lakshadweep"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:142
+msgid "Puducherry"
+msgstr ""
+
+#: .\core\templates\core\report_issue.html:147
+#: .\core\templates\core\report_issue.html:152
+msgid "District"
+msgstr "જિલ્લો"
+
+#: .\core\templates\core\report_issue.html:159
+msgid "Area / Locality"
+msgstr "વિસ્તાર / વિસ્તાર"
+
+#: .\core\templates\core\report_issue.html:161
+msgid "Select area"
+msgstr "વિસ્તાર પસંદ કરો"
+
+#: .\core\templates\core\report_issue.html:166
+msgid "Pincode"
+msgstr "પિનકોડ"
+
+#: .\core\templates\core\report_issue.html:170
+msgid "Enter pincode"
+msgstr "પિનકોડ દાખલ કરો"
+
+#: .\core\templates\core\report_issue.html:177
+msgid "Upload a clear photo (optional)"
+msgstr "સ્પષ્ટ ફોટો અપલોડ કરો (વૈકલ્પિક)"
+
+#: .\core\templates\core\report_issue.html:181
+msgid "Your identity stays private"
+msgstr "તમારી ઓળખ ખાનગી રહેશે"
+
+#: .\core\templates\core\report_issue.html:182
+msgid "Submit Issue"
+msgstr "સમસ્યા સબમિટ કરો"
+
+# ================= SUCCESS =================
+#: .\core\templates\core\success.html:22
+msgid "Issue Submitted Successfully!"
+msgstr "સમસ્યા સફળતાપૂર્વક સબમિટ થઈ!"
+
+#: .\core\templates\core\success.html:24
+msgid "Your complaint has been registered."
+msgstr "તમારી ફરિયાદ નોંધાઈ ગઈ છે."
+
+#: .\core\templates\core\success.html:27
+#: .\core\templates\core\track_issue.html:44
+msgid "Complaint ID:"
+msgstr "ફરિયાદ આઈડી:"
+
+#: .\core\templates\core\success.html:31
+msgid "Please save this ID to track your issue."
+msgstr "કૃપા કરીને આ આઈડી સાચવી રાખો."
+
+#: .\core\templates\core\success.html:44
+msgid "Go to Home"
+msgstr "મુખ્ય પૃષ્ઠ પર જાઓ"
+
+# ================= TRACK ISSUE =================
+#: .\core\templates\core\track_issue.html:13
+msgid "Track Your Issue"
+msgstr "તમારી સમસ્યા ટ્રેક કરો"
+
+#: .\core\templates\core\track_issue.html:22
+msgid "Enter Complaint ID (e.g. CC-2025-0001)"
+msgstr "ફરિયાદ આઈડી દાખલ કરો (જેમ કે CC-2025-0001)"
+
+#: .\core\templates\core\track_issue.html:27
+msgid "Track Issue"
+msgstr "સમસ્યા ટ્રેક કરો"
+
+#: .\core\templates\core\track_issue.html:41
+msgid "Issue Details"
+msgstr "સમસ્યાની વિગતો"
+
+#: .\core\templates\core\track_issue.html:49
+msgid "Status:"
+msgstr "સ્થિતિ:"
+
+#: .\core\templates\core\track_issue.html:61
+msgid "Urgency:"
+msgstr "તાત્કાલિકતા:"
+
+#: .\core\templates\core\track_issue.html:66
+msgid "State:"
+msgstr "રાજ્ય:"
+
+#: .\core\templates\core\track_issue.html:71
+msgid "District:"
+msgstr "જિલ્લો:"
+
+#: .\core\templates\core\track_issue.html:76
+msgid "Area / Locality:"
+msgstr "વિસ્તાર / વિસ્તાર:"
+
+#: .\core\templates\core\track_issue.html:81
+msgid "Pincode:"
+msgstr "પિનકોડ:"
+
+#: .\core\templates\core\track_issue.html:86
+msgid "Reported On:"
+msgstr "રિપોર્ટ થયેલ તારીખ:"
+
+#: .\core\templates\core\track_issue.html:91
+msgid "Description:"
+msgstr "વર્ણન:"
+
+#~ msgid "Login"
+#~ msgstr "લૉગિન"

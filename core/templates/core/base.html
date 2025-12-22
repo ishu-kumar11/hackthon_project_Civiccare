@@ -1,0 +1,53 @@
+{% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% trans "CivicCare | Citizen Issue Reporting System" %}</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header>
+    <div class="logo">{% trans "Team Youth" %}</div>
+
+    <nav>
+      <a href="{% url 'home' %}">{% trans "Home" %}</a>
+      <a href="{% url 'report_issue' %}">{% trans "Report Issue" %}</a>
+      <a href="{% url 'track_issue' %}">{% trans "Track Status" %}</a>
+
+      <form action="{% url 'set_language' %}" method="post" class="lang-form">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.path }}">
+
+  <select name="language" onchange="this.form.submit()">
+    <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+    <option value="hi" {% if LANGUAGE_CODE == 'hi' %}selected{% endif %}>हिन्दी</option>
+    <option value="gu" {% if LANGUAGE_CODE == 'gu' %}selected{% endif %}>ગુજરાતી</option>
+  </select>
+</form>
+    </nav>
+  </header>
+
+  <!-- ============== PAGE CONTENT ============== -->
+  {% block content %}
+  {% endblock %}
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    © 2025 {% trans "CivicCare" %} | {% trans "Citizen Issue Reporting System" %}
+  </footer>
+
+</body>
+</html>

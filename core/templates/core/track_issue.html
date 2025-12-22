@@ -1,0 +1,100 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/track_issue.css' %}">
+
+<section class="track-page">
+
+  <div class="track-card">
+
+    <h2>🔍 {% trans "Track Your Issue" %}</h2>
+
+    <!-- SEARCH FORM -->
+    <form method="POST" class="track-form">
+      {% csrf_token %}
+      <input
+        type="text"
+        name="complaint_id"
+        class="track-input"
+        placeholder="{% trans 'Enter Complaint ID (e.g. CC-2025-0001)' %}"
+        required
+      />
+
+      <button type="submit" class="track-btn">
+        {% trans "Track Issue" %}
+      </button>
+    </form>
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+  <p class="track-error">{{ error }}</p>
+{% endif %}
+
+    <!-- ISSUE DETAILS -->
+    {% if issue %}
+      <div class="track-details">
+        <hr>
+
+        <h3>📄 {% trans "Issue Details" %}</h3>
+
+        <p>
+          <strong>{% trans "Complaint ID:" %}</strong>
+          {{ issue.complaint_id }}
+        </p>
+
+        <p>
+          <strong>{% trans "Status:" %}</strong>
+          <span class="status status-{{ issue.status }}">
+            {{ issue.get_status_display }}
+          </span>
+        </p>
+
+        <p>
+          <strong>{% trans "Category:" %}</strong>
+          {{ issue.get_category_display }}
+        </p>
+
+        <p>
+          <strong>{% trans "Urgency:" %}</strong>
+          {{ issue.get_urgency_display }}
+        </p>
+
+        <p>
+          <strong>{% trans "State:" %}</strong>
+          {{ issue.get_state_display }}
+        </p>
+
+        <p>
+          <strong>{% trans "District:" %}</strong>
+          {{ issue.district }}
+        </p>
+
+        <p>
+          <strong>{% trans "Area / Locality:" %}</strong>
+          {{ issue.location }}
+        </p>
+
+        <p>
+          <strong>{% trans "Pincode:" %}</strong>
+          {{ issue.pincode }}
+        </p>
+
+        <p>
+          <strong>{% trans "Reported On:" %}</strong>
+          {{ issue.created_at|date:"d M Y" }}
+        </p>
+
+        <p>
+          <strong>{% trans "Description:" %}</strong><br>
+          {{ issue.description }}
+        </p>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

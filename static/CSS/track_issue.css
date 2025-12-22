@@ -1,0 +1,85 @@
+.status {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Status colors */
+.status-pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.status-in_progress {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status-resolved {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+
+
+.track-page {
+  min-height: 80vh;
+  background: linear-gradient(135deg, #bae6fd, #fbcfe8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.track-card {
+  background: white;
+  padding: 40px;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+}
+
+.track-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.track-form {
+  margin: 30px 0;
+}
+
+.track-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.track-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #ec4899);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.track-error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.track-details {
+  margin-top: 30px;
+}
+
+.track-details p {
+  margin-bottom: 8px;
+}
