@@ -1,11 +1,16 @@
 from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
+from django.conf import settings
+
 
 
 
 
 class Issue(models.Model):
+
+
 
     STATE_CHOICES = [
     ('AN', 'Andaman and Nicobar Islands'),
@@ -75,6 +80,14 @@ class Issue(models.Model):
         ('high', 'High'),
     ]
 
+    user = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE,
+    related_name='issues',
+    null=True,        
+    blank=True
+)
+
     complaint_id = models.CharField(max_length=20, unique=True, blank=True)
 
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
@@ -116,3 +129,49 @@ class Issue(models.Model):
     def __str__(self):
         return self.complaint_id
 
+
+
+
+
+
+
+# USER PROFILE MODEL
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=10)
+    pincode = models.CharField(max_length=6)
+    state = models.CharField(max_length=100)
+    district = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)  
+
+    def __str__(self):
+        return self.user.username
+
+
+
+# SIGNALS (AUTO CREATE PROFILE)
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+
+
+
+class IssueVote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    vote = models.BooleanField()  # True = Real, False = Fake
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'issue')  # one vote per user per issue
+
+    def __str__(self):
+        return f"{self.user.username} - {self.issue.title}"

@@ -120,3 +120,76 @@
     font-size: 16px;
     color: #6b7280;
 }
+
+
+
+/* ===== VOTING UI (CIVIC STYLE) ===== */
+
+.vote-section {
+  margin-top: 14px;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.vote-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.vote-count {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* 👍 REAL */
+.vote-btn.real {
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.vote-btn.real:hover {
+  background: #dcfce7;
+}
+
+/* 👎 FAKE */
+.vote-btn.fake {
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.vote-btn.fake:hover {
+  background: #fee2e2;
+}
+
+/* Message */
+.vote-message {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #dc2626;
+}
+
+/* Login hint */
+.login-hint {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+.login-hint a {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}

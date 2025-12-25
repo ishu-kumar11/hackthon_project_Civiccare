@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<section class="dashboard-page">
+  <div class="dashboard-card">
+
+    <div class="dashboard-header">
+      <h2>My Dashboard</h2>
+      <p>Your profile & reported issues</p>
+    </div>
+
+    <!-- PROFILE SECTION -->
+    <form method="post" class="profile-form">
+      {% csrf_token %}
+
+      <input type="text" value="{{ request.user.username }}" disabled>
+
+      <input type="text" name="phone" value="{{ profile.phone }}" required>
+
+      <input type="text" value="{{ profile.pincode }}" disabled>
+      <input type="text" value="{{ profile.state }}" disabled>
+      <input type="text" value="{{ profile.district }}" disabled>
+
+      <select name="location" required>
+        <option value="{{ profile.location }}">
+          {{ profile.location|title }}
+        </option>
+      </select>
+
+      <button type="submit" class="primary-btn">
+        Update Profile
+      </button>
+    </form>
+
+    <div class="divider"></div>
+
+    <!-- COMPLAINTS SECTION -->
+    <div class="complaints-section">
+      <h3>My Complaints</h3>
+
+      {% if issues %}
+        {% for issue in issues %}
+          <div class="complaint-card">
+            <div class="complaint-title">{{ issue.title }}</div>
+            <div class="complaint-meta">
+              {{ issue.category }} ·
+              {{ issue.location }} ·
+              {{ issue.status }} ·
+              {{ issue.created_at|date:"d M Y" }}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="empty-text">
+          You have not reported any issue yet.
+        </p>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

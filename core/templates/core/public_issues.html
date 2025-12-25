@@ -71,17 +71,60 @@
 
             <p class="meta">
                 <strong>{% trans "Location:" %}</strong>
-                {{ issue.district }}, {{ issue.state }}
+                {{ issue.location }} ({{ issue.district }}, {{ issue.state }})
             </p>
+
 
             <p class="meta">
                 <strong>{% trans "Reported:" %}</strong>
                 {{ issue.created_at|date:"d M Y" }}
             </p>
 
-            <a href="#" class="details-btn">
-                {% trans "View Details" %}
-            </a>
+            <!-- ===== VOTING SECTION ===== -->
+    
+             
+<div class="vote-section">
+
+  {% if user.is_authenticated %}
+    <div class="vote-buttons">
+
+      <button type="button" class="vote-btn real"
+              onclick="voteIssue({{ issue.id }}, 'real')"
+              title="This issue is real">
+        👍
+        <span class="vote-count" id="real-count-{{ issue.id }}">
+          {{ issue.real_votes }}
+        </span>
+      </button>
+
+      <button type="button" class="vote-btn fake"
+              onclick="voteIssue({{ issue.id }}, 'fake')"
+              title="This issue is fake or incorrect">
+        👎
+        <span class="vote-count" id="fake-count-{{ issue.id }}">
+          {{ issue.fake_votes }}
+        </span>
+      </button>
+
+    </div>
+
+    <p class="vote-message" id="vote-msg-{{ issue.id }}"></p>
+
+  {% else %}
+    <p class="login-hint">
+      🔒 <a href="{% url 'login' %}?next={{ request.path }}">
+        Login to vote
+      </a>
+    </p>
+  {% endif %}
+
+</div>
+
+
+<!-- ===== END VOTING SECTION ===== -->
+
+
+
         </div>
 
         {% empty %}
@@ -91,5 +134,11 @@
     </div>
 
 </section>
+
+<script src="{% static 'Javascript/voting.js' %}"></script>
+
+<script>
+  const VOTE_URL_TEMPLATE = "{% url 'vote_issue' 0 %}";
+</script>
 
 {% endblock %}

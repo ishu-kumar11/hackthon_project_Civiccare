@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+<section class="auth-page">
+    <div class="auth-card">
+
+        <h2>Create Account</h2>
+        <p class="subtitle">Join CivicCare and help your community</p>
+
+        {% if error %}
+            <div class="form-error">
+            {{ error }}
+        </div>
+            {% endif %}
+
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text"
+                name="phone"
+                placeholder="Phone Number"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                required>
+
+
+            <input type="text" id="pincode" name="pincode" maxlength="6" placeholder="PIN Code" required>
+
+            <input type="text" id="state" name="state" placeholder="State" readonly>
+            <input type="text" id="district" name="district" placeholder="District" readonly>
+
+            <select id="location" name="location" required>
+                <option value="">Select Area</option>
+            </select>
+
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p class="switch">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
+
+    </div>
+</section>
+
+<script>
+document.getElementById('pincode').addEventListener('blur', function () {
+    const pincode = this.value;
+
+    if (pincode.length !== 6) return;
+
+    fetch(`/api/pincode/?pincode=${pincode}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        document.getElementById('state').value = data.state;
+        document.getElementById('district').value = data.district;
+
+        const area = document.getElementById('location');
+        area.innerHTML = '<option value="">Select Area</option>';
+
+        data.areas.forEach(a => {
+            const opt = document.createElement('option');
+            opt.value = a.toLowerCase();
+            opt.textContent = a;
+            area.appendChild(opt);
+        });
+    });
+});
+</script>
+
+{% endblock %}

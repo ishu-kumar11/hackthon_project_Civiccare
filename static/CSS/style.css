@@ -224,3 +224,50 @@
   border-color: #2563eb;
 }
 
+/* NAV AUTH BUTTONS */
+.nav-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-btn.login {
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  background: #ffffff;
+}
+
+.nav-btn.login:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.nav-btn.register {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.nav-btn.register:hover {
+  background: #1d4ed8;
+}
+
+.nav-btn.logout {
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  background: #ffffff;
+}
+
+.nav-btn.logout:hover {
+  background: #fee2e2;
+}
+
+/* USER NAME */
+.nav-user {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
