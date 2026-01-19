@@ -115,6 +115,33 @@ class Issue(models.Model):
     otp = models.CharField(max_length=6, blank=True, null=True)
     otp_created_at = models.DateTimeField(blank=True, null=True)
 
+    # ===============================
+    # AUTHORITY CONTROL FIELDS
+    # ===============================
+
+    is_fake = models.BooleanField(default=False)
+
+    fake_marked_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='fake_marked_issues'
+    )
+
+    fake_marked_at = models.DateTimeField(null=True, blank=True)
+
+    last_updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='authority_updates'
+    )
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 
 
 
@@ -175,3 +202,34 @@ class IssueVote(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.issue.title}"
+
+
+
+class AuditLog(models.Model):
+    ACTION_CHOICES = [
+        ('MARK_FAKE', 'Marked as Fake'),
+        ('STATUS_UPDATE', 'Status Updated'),
+        ('EDIT', 'Issue Edited'),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    issue = models.ForeignKey(
+        Issue,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    action = models.CharField(max_length=50, choices=ACTION_CHOICES)
+
+    remarks = models.TextField(blank=True, null=True)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.action} - {self.timestamp}"

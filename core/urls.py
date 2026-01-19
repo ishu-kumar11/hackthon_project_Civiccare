@@ -18,9 +18,6 @@ urlpatterns = [
     path('api/pincode/', pincode_lookup, name='pincode_lookup'),
 
     path('dashboard/', user_dashboard, name='user_dashboard'),
-
-
-
 ]
 
 

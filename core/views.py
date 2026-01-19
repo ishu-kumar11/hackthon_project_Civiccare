@@ -12,13 +12,6 @@ from django.http import JsonResponse
 from .models import Issue, IssueVote
 
 
-
-
-
-
-
-
-
 def home(request):
     return render(request, 'core/index.html')
 
@@ -317,3 +310,9 @@ def user_dashboard(request):
     }
 
     return render(request, 'core/dashboard.html', context)
+
+
+
+
+
+
