@@ -1,0 +1,71 @@
+{% extends "authority/base_authority.html" %}
+
+{% block authority_content %}
+
+<div class="row text-center mb-4">
+
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6>🟡 Pending</h6>
+        <h3>{{ stats.pending }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6>🔵 In Progress</h6>
+        <h3>{{ stats.in_progress }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6>✅ Resolved</h6>
+        <h3>{{ stats.resolved }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h6>❌ Fake</h6>
+        <h3>{{ stats.fake }}</h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<h5>Recent Issues</h5>
+
+<table class="table table-bordered table-hover mt-3">
+  <thead class="table-light">
+    <tr>
+      <th>Complaint ID</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for issue in issues|slice:":10" %}
+    <tr>
+      <td>{{ issue.complaint_id }}</td>
+      <td>{{ issue.title }}</td>
+      <td>{{ issue.status }}</td>
+      <td>
+        <a href="{% url 'update_issue_status' issue.id %}" class="btn btn-sm btn-primary">Update</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

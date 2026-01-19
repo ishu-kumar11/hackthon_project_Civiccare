@@ -1,0 +1,75 @@
+{% extends "authority/base_authority.html" %}
+
+{% block authority_content %}
+
+<h5>All Issues</h5>
+
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-4">
+    <input type="text" name="q" class="form-control" placeholder="Search complaint / title">
+  </div>
+
+  <div class="col-md-3">
+    <select name="status" class="form-select">
+      <option value="">All Status</option>
+      <option value="pending">Pending</option>
+      <option value="in_progress">In Progress</option>
+      <option value="resolved">Resolved</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <select name="category" class="form-select">
+      <option value="">All Categories</option>
+      <option value="road">Road</option>
+      <option value="water">Water</option>
+      <option value="electricity">Electricity</option>
+      <option value="garbage">Garbage</option>
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">Filter</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Fake?</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for issue in issues %}
+    <tr>
+      <td>{{ issue.complaint_id }}</td>
+      <td>{{ issue.title }}</td>
+      <td>{{ issue.status }}</td>
+      <td>
+        {% if issue.is_fake %}
+          ❌
+        {% else %}
+          —
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'update_issue_status' issue.id %}" class="btn btn-sm btn-primary">Update</a>
+
+        {% if not issue.is_fake %}
+        <a href="{% url 'mark_issue_fake' issue.id %}" class="btn btn-sm btn-danger"
+           onclick="return confirm('Mark this issue as fake?');">
+           Mark Fake
+        </a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

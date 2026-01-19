@@ -1,0 +1,49 @@
+{% extends "authority/base_authority.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/audit_log.css' %}">
+{% endblock %}
+
+{% block authority_content %}
+
+<div class="audit-page">
+  <div class="audit-card">
+
+    <h5>Audit Logs</h5>
+
+    <table class="table audit-table table-bordered">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Action</th>
+          <th>Issue</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log.user }}</td>
+
+          <td>
+            <span class="audit-badge action-{{ log.action|lower }}">
+              {{ log.action }}
+            </span>
+          </td>
+
+          <td>{{ log.issue.complaint_id }}</td>
+
+          <td class="audit-time">
+            {{ log.timestamp }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+{% endblock %}
