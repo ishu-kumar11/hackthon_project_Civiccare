@@ -1,0 +1,108 @@
+civiccare_project/
+¦-- manage.py
+¦-- db.sqlite3
+¦-- .gitignore
+¦-- README.md
+¦-- requirements.txt
+¦
++-- civiccare/                      # Main project settings folder
+¦   +-- __init__.py
+¦   +-- settings.py
+¦   +-- urls.py
+¦   +-- wsgi.py
+¦   +-- asgi.py
+¦
++-- core/                           # Main app (Users + Issues + Public pages)
+¦   +-- __init__.py
+¦   +-- admin.py
+¦   +-- apps.py
+¦   +-- forms.py
+¦   +-- models.py
+¦   +-- urls.py
+¦   +-- views.py
+¦   +-- tests.py
+¦   +-- migrations/
+¦   ¦   +-- __init__.py
+¦   ¦   +-- 0001_initial.py
+¦   ¦   +-- 0002_issue_complaint_id.py
+¦   ¦   +-- 0003_issue_status.py
+¦   ¦   +-- 0004_issue_state.py
+¦   ¦   +-- 0005_issue_district_alter_issue_location.py
+¦   ¦   +-- 0006_issue_is_public.py
+¦   ¦   +-- 0007_issue_full_name_issue_phone.py
+¦   ¦   +-- 0008_issue_is_verified_issue_otp_issue_otp_created_at.py
+¦   ¦   +-- 0009_userprofile.py
+¦   ¦   +-- 0010_issuevote.py
+¦   ¦   +-- 0011_userprofile_location.py
+¦   ¦   +-- 0012_userprofile_pincode.py
+¦   ¦   +-- 0013_issue_user.py
+¦   ¦   +-- 0014_issue_fake_marked_at_issue_fake_marked_by_and_more.py
+¦   ¦   +-- 0015_issue_latitude_issue_longitude.py
+¦   ¦
+¦   +-- templates/
+¦       +-- core/
+¦           +-- base.html
+¦           +-- index.html
+¦           +-- login.html
+¦           +-- register.html
+¦           +-- dashboard.html
+¦           +-- report_issue.html
+¦           +-- success.html
+¦           +-- track_issue.html
+¦           +-- verify_otp.html
+¦           +-- public_issues.html
+¦           +-- issue_map.html
+¦
++-- authority/                      # Authority/Officer panel app
+¦   +-- __init__.py
+¦   +-- admin.py
+¦   +-- apps.py
+¦   +-- models.py
+¦   +-- urls.py
+¦   +-- views.py
+¦   +-- tests.py
+¦   +-- migrations/
+¦   ¦   +-- __init__.py
+¦   ¦
+¦   +-- templates/
+¦   ¦   +-- authority/
+¦   ¦       +-- base_authority.html
+¦   ¦       +-- dashboard.html
+¦   ¦       +-- issue_list.html
+¦   ¦       +-- update_status.html
+¦   ¦       +-- audit_logs.html
+¦   ¦
+¦   +-- static/
+¦       +-- authority/
+¦           +-- css/
+¦               +-- authority.css
+¦               +-- dashboard.css
+¦               +-- issue_list.css
+¦               +-- update_issue.css
+¦               +-- audit_log.css
+¦
++-- static/                         # Global static files used by website
+¦   +-- css/
+¦   ¦   +-- global.css
+¦   ¦   +-- style.css
+¦   ¦   +-- auth.css
+¦   ¦   +-- dashboard.css
+¦   ¦   +-- report_issue.css
+¦   ¦   +-- track_issue.css
+¦   ¦   +-- public_issues.css
+¦   ¦
+¦   +-- Javascript/
+¦       +-- pincode_autofill.js
+¦       +-- voting.js
+¦
++-- media/                          # Uploaded images/files
+¦   +-- issues/
+¦       +-- (uploaded images here...)
+¦
++-- locale/                         # Language translation (Gujarati + Hindi)
+    +-- gu/LC_MESSAGES/
+    ¦   +-- django.po
+    ¦   +-- django.mo
+    +-- hi/LC_MESSAGES/
+        +-- django.po
+        +-- django.mo

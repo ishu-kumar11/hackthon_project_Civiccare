@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CivicCare Map</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+
+  <style>
+    #map {
+      height: 90vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🗺️ Civic Issues Map</h2>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  // Create map
+  var map = L.map('map').setView([22.2587, 71.1924], 6); // Gujarat center
+
+  // Map tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  // Fetch issue data
+  fetch("/map-data/")
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(issue => {
+        L.marker([issue.lat, issue.lng])
+          .addTo(map)
+          .bindPopup(`<b>${issue.title}</b>`);
+      });
+    });
+</script>
+
+</body>
+</html>

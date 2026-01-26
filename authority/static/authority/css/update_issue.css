@@ -1,0 +1,69 @@
+/* ===============================
+   Update Issue Status – Authority
+   =============================== */
+
+.page-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #0f172a;
+}
+
+/* Card */
+.update-card {
+  max-width: 520px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 18px;
+}
+
+/* Issue info */
+.issue-info {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #334155;
+}
+
+.issue-info p {
+  margin: 4px 0;
+}
+
+/* Form */
+.update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.update-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.update-form select {
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+/* Button */
+.btn-submit {
+  margin-top: 6px;
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: #15803d;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background: #166534;
+}

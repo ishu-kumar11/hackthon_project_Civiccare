@@ -1,0 +1,86 @@
+/* ================================
+   Authority Panel – CivicCare Style
+   ================================ */
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f4f6f8;
+  color: #1f2937;
+}
+
+/* Container */
+.authority-container {
+  max-width: 1100px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 24px 28px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+.authority-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.authority-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.logout-btn {
+  padding: 6px 14px;
+  border: 1px solid #dc2626;
+  color: #dc2626;
+  border-radius: 4px;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* Navigation */
+.authority-nav {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+}
+
+.authority-nav a {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #1e40af;
+  text-decoration: none;
+  border: 1px solid #c7d2fe;
+  border-radius: 4px;
+  background-color: #eef2ff;
+  transition: 0.2s;
+}
+
+.authority-nav a:hover {
+  background-color: #1e40af;
+  color: #ffffff;
+}
+
+/* Divider */
+.authority-divider {
+  margin: 22px 0;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+/* Content Area */
+.authority-content {
+  margin-top: 10px;
+}
