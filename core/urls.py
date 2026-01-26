@@ -18,6 +18,11 @@ urlpatterns = [
     path('api/pincode/', pincode_lookup, name='pincode_lookup'),
 
     path('dashboard/', user_dashboard, name='user_dashboard'),
+    
+
+    path("map-data/", issue_map_data, name="issue-map-data"),
+    path("map/", issue_map_view, name="issue-map"),
+
 ]
 
 

@@ -59,9 +59,16 @@
 
             <div class="issue-top">
                 <h3>{{ issue.title }}</h3>
-                <span class="status {{ issue.status|lower }}">
-                    {{ issue.get_status_display }}
-                </span>
+                {% if issue.is_fake %}
+                    <span class="status fake fake-badge">
+                        {% trans "Marked Fake" %}
+                    </span>
+                {% else %}
+                    <span class="status {{ issue.status|lower }}">
+                        {{ issue.get_status_display }}
+                    </span>
+                {% endif %}
+
             </div>
 
             <p class="meta">
@@ -85,7 +92,7 @@
              
 <div class="vote-section">
 
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and not issue.is_fake %}
     <div class="vote-buttons">
 
       <button type="button" class="vote-btn real"
@@ -110,16 +117,20 @@
 
     <p class="vote-message" id="vote-msg-{{ issue.id }}"></p>
 
+  {% elif issue.is_fake %}
+    <p class="fake-warning">
+      🚫 {% trans "This issue was marked fake by authorities" %}
+    </p>
+
   {% else %}
     <p class="login-hint">
       🔒 <a href="{% url 'login' %}?next={{ request.path }}">
-        Login to vote
+        {% trans "Login to vote" %}
       </a>
     </p>
   {% endif %}
 
 </div>
-
 
 <!-- ===== END VOTING SECTION ===== -->
 

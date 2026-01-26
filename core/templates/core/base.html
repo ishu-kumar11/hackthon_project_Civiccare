@@ -7,22 +7,26 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
 
-  {% block extra_head %}{% endblock %}
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% trans "CivicCare | Citizen Issue Reporting System" %}</title>
 
-  <!-- Google Font -->
+
+  <!-- Google Font (GLOBAL) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="{% static 'css/global.css' %}">
 
-  
-
-  <!-- Main CSS -->
+  <!-- CORE CSS (core pages only design) -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- 🔽 PAGE / APP SPECIFIC (authority injects here) -->
+  {% block extra_head %}{% endblock %}
+
 </head>
 <body>
+
 
   <!-- ================= NAVBAR ================= -->
   <header>

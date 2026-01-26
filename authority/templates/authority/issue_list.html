@@ -1,45 +1,48 @@
 {% extends "authority/base_authority.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'authority/css/issue_list.css' %}">
+{% endblock %}
 
 {% block authority_content %}
 
-<h5>All Issues</h5>
+<h4 class="page-title">All Issues</h4>
 
-<form method="get" class="row g-2 mb-3">
-  <div class="col-md-4">
-    <input type="text" name="q" class="form-control" placeholder="Search complaint / title">
-  </div>
+<!-- Filters -->
+<form method="get" class="filter-bar">
+  <input type="text" name="q" placeholder="Search complaint / title">
 
-  <div class="col-md-3">
-    <select name="status" class="form-select">
-      <option value="">All Status</option>
-      <option value="pending">Pending</option>
-      <option value="in_progress">In Progress</option>
-      <option value="resolved">Resolved</option>
-    </select>
-  </div>
+  <select name="status">
+    <option value="">All Status</option>
+    <option value="pending">Pending</option>
+    <option value="in_progress">In Progress</option>
+    <option value="resolved">Resolved</option>
+  </select>
 
-  <div class="col-md-3">
-    <select name="category" class="form-select">
-      <option value="">All Categories</option>
-      <option value="road">Road</option>
-      <option value="water">Water</option>
-      <option value="electricity">Electricity</option>
-      <option value="garbage">Garbage</option>
-    </select>
-  </div>
+  <select name="category">
+    <option value="">All Categories</option>
+    <option value="road">Road</option>
+    <option value="water">Water</option>
+    <option value="electricity">Electricity</option>
+    <option value="garbage">Garbage</option>
+  </select>
 
-  <div class="col-md-2">
-    <button class="btn btn-primary w-100">Filter</button>
-  </div>
+  <button type="submit" class="btn-filter">Filter</button>
 </form>
 
-<table class="table table-striped">
+<!-- Issues Table -->
+<table class="issue-table">
   <thead>
     <tr>
       <th>ID</th>
       <th>Title</th>
+      <th>State</th>
+      <th>District</th>
+      <th>Pincode</th>
+      <th>Area</th>
       <th>Status</th>
-      <th>Fake?</th>
+      <th>Fake</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -49,22 +52,35 @@
     <tr>
       <td>{{ issue.complaint_id }}</td>
       <td>{{ issue.title }}</td>
-      <td>{{ issue.status }}</td>
+      <td>{{ issue.state }}</td>
+      <td>{{ issue.district }}</td>
+      <td>{{ issue.pincode }}</td>
+      <td>{{ issue.location }}</td>
       <td>
+        <span class="status-badge status-{{ issue.status|lower }}">
+          {{ issue.status }}
+        </span>
+      </td>
+
+      <td class="fake-col">
         {% if issue.is_fake %}
-          ❌
+          ✖
         {% else %}
           —
         {% endif %}
       </td>
-      <td>
-        <a href="{% url 'update_issue_status' issue.id %}" class="btn btn-sm btn-primary">Update</a>
+
+      <td class="action-col">
+        <a href="{% url 'update_issue_status' issue.id %}" class="action-link">
+          Update
+        </a>
 
         {% if not issue.is_fake %}
-        <a href="{% url 'mark_issue_fake' issue.id %}" class="btn btn-sm btn-danger"
-           onclick="return confirm('Mark this issue as fake?');">
-           Mark Fake
-        </a>
+          <a href="{% url 'mark_issue_fake' issue.id %}"
+             class="action-link danger"
+             onclick="return confirm('Mark this issue as fake?');">
+            Mark Fake
+          </a>
         {% endif %}
       </td>
     </tr>

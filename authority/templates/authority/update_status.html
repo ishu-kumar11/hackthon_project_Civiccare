@@ -1,24 +1,32 @@
 {% extends "authority/base_authority.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'authority/css/update_issue.css' %}">
+{% endblock %}
 
 {% block authority_content %}
 
-<h5>Update Issue Status</h5>
+<h4 class="page-title">Update Issue Status</h4>
 
-<div class="card p-3">
+<div class="update-card">
 
-  <p><strong>Complaint ID:</strong> {{ issue.complaint_id }}</p>
-  <p><strong>Title:</strong> {{ issue.title }}</p>
+  <div class="issue-info">
+    <p><strong>Complaint ID:</strong> {{ issue.complaint_id }}</p>
+    <p><strong>Title:</strong> {{ issue.title }}</p>
+  </div>
 
-  <form method="post">
+  <form method="post" class="update-form">
     {% csrf_token %}
 
-    <select name="status" class="form-select mb-3">
-      <option value="pending">Pending</option>
-      <option value="in_progress">In Progress</option>
-      <option value="resolved">Resolved</option>
+    <label for="status">Status</label>
+    <select name="status" id="status">
+      <option value="pending" {% if issue.status == 'pending' %}selected{% endif %}>Pending</option>
+      <option value="in_progress" {% if issue.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+      <option value="resolved" {% if issue.status == 'resolved' %}selected{% endif %}>Resolved</option>
     </select>
 
-    <button class="btn btn-success">Update Status</button>
+    <button type="submit" class="btn-submit">Update Status</button>
   </form>
 
 </div>

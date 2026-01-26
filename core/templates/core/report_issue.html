@@ -6,6 +6,12 @@
 
 <link rel="stylesheet" href="{% static 'css/report_issue.css' %}">
 
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet/dist/leaflet.css"
+/>
+
+
 <!-- ============ PAGE HEADER ============ -->
 <section class="report-header">
   <h1>{% trans "Report an Issue" %}</h1>
@@ -182,9 +188,45 @@
       <button type="submit">{% trans "Submit Issue" %}</button>
     </div>
 
+  <div id="map" style="height: 400px;"></div>
+
+  <input type="hidden" id="id_latitude" name="latitude">
+  <input type="hidden" id="id_longitude" name="longitude">
+
   </form>
 </section>
 
 <script src="{% static 'Javascript/pincode_autofill.js' %}"></script>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  var map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  var marker;
+
+  // Auto detect user location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+
+      map.setView([lat, lng], 15);
+
+      marker = L.marker([lat, lng]).addTo(map)
+        .bindPopup("📍 Your current location")
+        .openPopup();
+
+      document.getElementById("id_latitude").value = lat;
+      document.getElementById("id_longitude").value = lng;
+    });
+  }
+</script>
+</body>
+
 
 {% endblock %}

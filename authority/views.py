@@ -26,11 +26,12 @@ def authority_dashboard(request):
     issues = Issue.objects.all().order_by('-created_at')
 
     stats = {
-        'pending': Issue.objects.filter(status='pending', is_fake=False).count(),
-        'in_progress': Issue.objects.filter(status='in_progress', is_fake=False).count(),
-        'resolved': Issue.objects.filter(status='resolved', is_fake=False).count(),
-        'fake': Issue.objects.filter(is_fake=True).count(),
-    }
+    'pending': Issue.objects.filter(status='pending', is_fake=False).count(),
+    'in_progress': Issue.objects.filter(status='in_progress', is_fake=False).count(),
+    'resolved': Issue.objects.filter(status='resolved', is_fake=False).count(),
+    'fake': Issue.objects.filter(is_fake=True).count(),
+}
+
 
     return render(request, 'authority/dashboard.html', {
         'issues': issues,

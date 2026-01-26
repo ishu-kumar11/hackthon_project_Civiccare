@@ -94,6 +94,8 @@ class Issue(models.Model):
     urgency = models.CharField(max_length=10, choices=URGENCY_CHOICES)
     title = models.CharField(max_length=200)
     description = models.TextField()
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     district = models.CharField(max_length=100)
     location = models.CharField(max_length=150)
     pincode = models.CharField(max_length=10)

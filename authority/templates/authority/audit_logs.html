@@ -1,18 +1,19 @@
 {% extends "authority/base_authority.html" %}
 {% load static %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/audit_log.css' %}">
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'authority/css/audit_log.css' %}">
 {% endblock %}
+
 
 {% block authority_content %}
 
 <div class="audit-page">
   <div class="audit-card">
 
-    <h5>Audit Logs</h5>
+    <h5 class="audit-title">Audit Logs</h5>
 
-    <table class="table audit-table table-bordered">
+    <table class="audit-table">
       <thead>
         <tr>
           <th>User</th>

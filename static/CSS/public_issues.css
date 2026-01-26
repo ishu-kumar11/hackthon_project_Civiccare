@@ -193,3 +193,45 @@
   font-weight: 500;
   text-decoration: none;
 }
+
+
+/* Fake status badge */
+.status.fake {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* Fake issue card */
+.issue-fake {
+  border: 1px solid #fecaca;
+  background: #fffafa;
+  opacity: 0.9;
+}
+
+.issue-fake h3 {
+  color: #7f1d1d;
+}
+
+
+/* ===============================
+   Fake Issue Emphasis (Public)
+   =============================== */
+
+.fake-badge {
+  background: #fee2e2;   /* light red background */
+  color: #b91c1c;        /* strong red text */
+  border: 1px solid #fecaca;
+  font-weight: 600;
+}
+
+/* Optional: stronger message below */
+.fake-warning {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #b91c1c;
+  font-weight: 500;
+}

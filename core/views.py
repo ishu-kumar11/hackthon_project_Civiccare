@@ -316,3 +316,20 @@ def user_dashboard(request):
 
 
 
+def issue_map_data(request):
+    issues = Issue.objects.exclude(latitude=None, longitude=None)
+
+    data = []
+    for issue in issues:
+        data.append({
+            "id": issue.id,
+            "title": issue.title,
+            "lat": issue.latitude,
+            "lng": issue.longitude,
+        })
+
+    return JsonResponse(data, safe=False)
+
+
+def issue_map_view(request):
+    return render(request, "core/issue_map.html")
