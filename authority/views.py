@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.db.models import Q
-from core.models import Issue, AuditLog   # 👈 IMPORTANT (app name change)
+from core.models import Issue, AuditLog   
 from django.contrib.auth.decorators import login_required
 
 
