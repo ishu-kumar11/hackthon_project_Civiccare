@@ -23,6 +23,10 @@ urlpatterns = [
     path("map-data/", issue_map_data, name="issue-map-data"),
     path("map/", issue_map_view, name="issue-map"),
 
+    path('issue/<int:issue_id>/confirm-solved/', confirm_issue_solved, name='confirm_issue_solved'),
+    path('issue/<int:issue_id>/not-solved/', report_issue_not_solved, name='report_issue_not_solved'),
+
+
 ]
 
 

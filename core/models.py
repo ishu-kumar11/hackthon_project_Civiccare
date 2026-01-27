@@ -56,6 +56,7 @@ class Issue(models.Model):
     ('pending', 'Pending'),
     ('in_progress', 'In Progress'),
     ('resolved', 'Resolved'),
+    ('reopened', 'Reopened'),
 ]
 
     status = models.CharField(
@@ -160,6 +161,20 @@ class Issue(models.Model):
 
 
 
+class IssueResolutionFeedback(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name="resolution_feedbacks")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    is_confirmed_solved = models.BooleanField()  # True = Solved, False = Not Solved
+    comment = models.CharField(max_length=255, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'issue')  # ✅ one feedback per user per issue
+
+    def __str__(self):
+        return f"{self.user.username} - {self.issue.complaint_id} - {self.is_confirmed_solved}"
 
 
 

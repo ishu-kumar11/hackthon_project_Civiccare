@@ -24,6 +24,10 @@
       <option value="pending" {% if issue.status == 'pending' %}selected{% endif %}>Pending</option>
       <option value="in_progress" {% if issue.status == 'in_progress' %}selected{% endif %}>In Progress</option>
       <option value="resolved" {% if issue.status == 'resolved' %}selected{% endif %}>Resolved</option>
+      <option value="reopened" {% if issue.status == 'reopened' %}selected{% endif %}>
+      Reopened
+      </option>
+
     </select>
 
     <button type="submit" class="btn-submit">Update Status</button>

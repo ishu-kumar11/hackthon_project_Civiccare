@@ -83,3 +83,51 @@
 .track-details p {
   margin-bottom: 8px;
 }
+
+
+/* ✅ Resolution Confirmation Buttons */
+.resolution-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-confirm,
+.btn-reopen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn-confirm {
+  background: #16a34a;   /* green */
+  color: white;
+}
+
+.btn-confirm:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.btn-reopen {
+  background: #dc2626;   /* red */
+  color: white;
+}
+
+.btn-reopen:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}

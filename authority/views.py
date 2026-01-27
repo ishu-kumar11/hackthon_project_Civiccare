@@ -107,7 +107,7 @@ def update_issue_status(request, issue_id):
     if request.method == 'POST':
         new_status = request.POST.get('status')
 
-        if new_status not in ['pending', 'in_progress', 'resolved']:
+        if new_status not in ['pending', 'in_progress', 'resolved', 'reopened']:
             return HttpResponseForbidden("Invalid status")
 
         issue.status = new_status

@@ -33,7 +33,7 @@
   <p class="track-error">{{ error }}</p>
 {% endif %}
 
-    <!-- ISSUE DETAILS -->
+        <!-- ISSUE DETAILS -->
     {% if issue %}
       <div class="track-details">
         <hr>
@@ -51,6 +51,12 @@
             {{ issue.get_status_display }}
           </span>
         </p>
+
+        {% if issue.status == "reopened" %}
+          <p style="color:red; font-weight:600; margin-top:10px;">
+            ❗ {% trans "This issue was reopened because citizens reported it is not solved." %}
+          </p>
+        {% endif %}
 
         <p>
           <strong>{% trans "Category:" %}</strong>
@@ -91,6 +97,27 @@
           <strong>{% trans "Description:" %}</strong><br>
           {{ issue.description }}
         </p>
+
+        <!-- ✅ RESOLUTION CONFIRMATION SECTION -->
+        {% if user.is_authenticated and issue.status == "resolved" %}
+          <hr>
+          <h3>✅ {% trans "Resolution Confirmation" %}</h3>
+
+          <p style="margin-bottom: 10px;">
+            {% trans "Was this issue actually solved?" %}
+          </p>
+
+          <div class="resolution-actions">
+            <a href="{% url 'confirm_issue_solved' issue.id %}" class="btn-confirm">
+              ✅ {% trans "Confirm Solved" %}
+            </a>
+
+            <a href="{% url 'report_issue_not_solved' issue.id %}" class="btn-reopen">
+              ❌ {% trans "Not Solved (Reopen)" %}
+            </a>
+          </div>
+        {% endif %}
+
       </div>
     {% endif %}
 
@@ -98,3 +125,4 @@
 </section>
 
 {% endblock %}
+

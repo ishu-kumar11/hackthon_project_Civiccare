@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .forms import IssueForm
 from .models import Issue
 import random
@@ -9,7 +9,9 @@ from .models import UserProfile
 
 
 from django.http import JsonResponse
-from .models import Issue, IssueVote
+from .models import Issue, IssueVote, UserProfile, IssueResolutionFeedback
+from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 
 def home(request):
@@ -333,3 +335,77 @@ def issue_map_data(request):
 
 def issue_map_view(request):
     return render(request, "core/issue_map.html")
+
+
+
+@login_required
+def confirm_issue_solved(request, issue_id):
+    issue = get_object_or_404(Issue, id=issue_id)
+
+    # ✅ Only allow if issue is resolved
+    if issue.status != "resolved":
+        messages.error(request, "This issue is not marked as resolved yet.")
+        return redirect("track_issue", complaint_id=issue.complaint_id)
+
+    # ✅ Same pincode rule
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        return HttpResponseForbidden("Profile not found. Please complete your profile.")
+
+    if profile.pincode != issue.pincode:
+        return HttpResponseForbidden("You can confirm only issues from your area (same pincode).")
+
+    # ✅ Save feedback (solved = True)
+    IssueResolutionFeedback.objects.update_or_create(
+        issue=issue,
+        user=request.user,
+        defaults={"is_confirmed_solved": True}
+    )
+
+    messages.success(request, "✅ Thanks! You confirmed the issue is solved.")
+    return redirect("track_issue", complaint_id=issue.complaint_id)
+
+
+@login_required
+def report_issue_not_solved(request, issue_id):
+    issue = get_object_or_404(Issue, id=issue_id)
+
+    # ✅ Only allow if issue is resolved
+    if issue.status != "resolved":
+        messages.error(request, "This issue is not marked as resolved yet.")
+        return redirect("track_issue", complaint_id=issue.complaint_id)
+
+    # ✅ Same pincode rule
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        return HttpResponseForbidden("Profile not found. Please complete your profile.")
+
+    if profile.pincode != issue.pincode:
+        return HttpResponseForbidden("You can reopen only issues from your area (same pincode).")
+
+    # ✅ Save feedback (not solved = False)
+    IssueResolutionFeedback.objects.update_or_create(
+        issue=issue,
+        user=request.user,
+        defaults={"is_confirmed_solved": False}
+    )
+
+    # ✅ If many users say "not solved" → reopen
+    not_solved_count = IssueResolutionFeedback.objects.filter(
+        issue=issue,
+        is_confirmed_solved=False
+    ).count()
+
+    REOPEN_THRESHOLD = 3  # you can change 3 to 2 or 5
+
+    if not_solved_count >= REOPEN_THRESHOLD:
+        issue.status = "reopened"  # or "reopened" if you add that status
+        issue.save()
+        messages.warning(request, "❌ Issue reopened because multiple users said it is not solved.")
+
+    else:
+        messages.info(request, f"Feedback saved. Not solved count = {not_solved_count}")
+
+    return redirect("track_issue", complaint_id=issue.complaint_id)
