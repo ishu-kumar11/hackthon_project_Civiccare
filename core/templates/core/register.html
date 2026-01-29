@@ -27,6 +27,9 @@
                 maxlength="10"
                 pattern="[0-9]{10}"
                 required>
+                
+            <input type="email" name="email" placeholder="Email Address" required>
+
 
 
             <input type="text" id="pincode" name="pincode" maxlength="6" placeholder="PIN Code" required>
@@ -38,8 +41,50 @@
                 <option value="">Select Area</option>
             </select>
 
-            <input type="password" name="password1" placeholder="Password" required>
-            <input type="password" name="password2" placeholder="Confirm Password" required>
+           <div class="password-box">
+    <input type="password" name="password1" id="password1" placeholder="Password" required>
+
+    <span class="toggle-password-btn" onclick="togglePassword('password1','eye1','eyeSlash1')">
+        <!-- Eye -->
+        <svg id="eye1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+        </svg>
+
+        <!-- Eye Slash -->
+        <svg id="eyeSlash1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+            <path d="M3 3l18 18"/>
+            <path d="M10.58 10.58A3 3 0 0 0 12 15a3 3 0 0 0 2.42-4.42"/>
+            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a18.4 18.4 0 0 1-4.2 5.4"/>
+            <path d="M6.11 6.11C3.73 8 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.5-1.1"/>
+        </svg>
+    </span>
+</div>
+
+<div class="password-box">
+    <input type="password" name="password2" id="password2" placeholder="Confirm Password" required>
+
+    <span class="toggle-password-btn" onclick="togglePassword('password2','eye2','eyeSlash2')">
+        <!-- Eye -->
+        <svg id="eye2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+        </svg>
+
+        <!-- Eye Slash -->
+        <svg id="eyeSlash2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+            <path d="M3 3l18 18"/>
+            <path d="M10.58 10.58A3 3 0 0 0 12 15a3 3 0 0 0 2.42-4.42"/>
+            <path d="M9.88 5.09A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a18.4 18.4 0 0 1-4.2 5.4"/>
+            <path d="M6.11 6.11C3.73 8 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.5-1.1"/>
+        </svg>
+    </span>
+</div>
+
 
             <button type="submit">Register</button>
         </form>
@@ -81,5 +126,24 @@ document.getElementById('pincode').addEventListener('blur', function () {
     });
 });
 </script>
+
+<script>
+function togglePassword(inputId, eyeId, eyeSlashId) {
+    const input = document.getElementById(inputId);
+    const eye = document.getElementById(eyeId);
+    const eyeSlash = document.getElementById(eyeSlashId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        eye.style.display = "none";
+        eyeSlash.style.display = "block";
+    } else {
+        input.type = "password";
+        eye.style.display = "block";
+        eyeSlash.style.display = "none";
+    }
+}
+</script>
+
 
 {% endblock %}

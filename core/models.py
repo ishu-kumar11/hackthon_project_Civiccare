@@ -101,6 +101,7 @@ class Issue(models.Model):
     location = models.CharField(max_length=150)
     pincode = models.CharField(max_length=10)
     photo = models.ImageField(upload_to='issues/', blank=True, null=True)
+    video = models.FileField(upload_to='issues/videos/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     is_public = models.BooleanField(default=True)  

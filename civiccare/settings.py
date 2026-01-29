@@ -152,3 +152,15 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# ✅ Email configuration (Forgot Password - Gmail SMTP)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "ak0637993@gmail.com"
+EMAIL_HOST_PASSWORD = "flkwlhffviisxalp"
+
+DEFAULT_FROM_EMAIL = "CivicCare <ak0637993@gmail.com>"

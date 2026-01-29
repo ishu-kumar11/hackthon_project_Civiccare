@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Count,Q
 from core.models import Issue, AuditLog   
 from django.contrib.auth.decorators import login_required
+from core.models import IssueResolutionFeedback
 
 
 # =========================
@@ -17,26 +18,37 @@ def authority_required(view_func):
     return wrapper
 
 
+
+
 # =========================
 # Dashboard
 # =========================
 @authority_required
 def authority_dashboard(request):
-
-    issues = Issue.objects.all().order_by('-created_at')
+    issues = Issue.objects.annotate(
+        solved_confirmations=Count(
+            "resolution_feedbacks",
+            filter=Q(resolution_feedbacks__is_confirmed_solved=True)
+        ),
+        not_solved_reports=Count(
+            "resolution_feedbacks",
+            filter=Q(resolution_feedbacks__is_confirmed_solved=False)
+        )
+    ).order_by("-created_at")
 
     stats = {
-    'pending': Issue.objects.filter(status='pending', is_fake=False).count(),
-    'in_progress': Issue.objects.filter(status='in_progress', is_fake=False).count(),
-    'resolved': Issue.objects.filter(status='resolved', is_fake=False).count(),
-    'fake': Issue.objects.filter(is_fake=True).count(),
-}
+        "pending": Issue.objects.filter(status="pending", is_fake=False).count(),
+        "in_progress": Issue.objects.filter(status="in_progress", is_fake=False).count(),
+        "resolved": Issue.objects.filter(status="resolved", is_fake=False).count(),
+        "fake": Issue.objects.filter(is_fake=True).count(),
+    }
 
-
-    return render(request, 'authority/dashboard.html', {
-        'issues': issues,
-        'stats': stats
+    return render(request, "authority/dashboard.html", {
+        "issues": issues,
+        "stats": stats,
     })
+
+
 
 
 # =========================

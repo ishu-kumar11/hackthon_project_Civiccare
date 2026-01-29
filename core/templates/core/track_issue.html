@@ -98,25 +98,45 @@
           {{ issue.description }}
         </p>
 
-        <!-- ✅ RESOLUTION CONFIRMATION SECTION -->
-        {% if user.is_authenticated and issue.status == "resolved" %}
-          <hr>
-          <h3>✅ {% trans "Resolution Confirmation" %}</h3>
+        {% if issue and issue.status == "resolved" %}
 
-          <p style="margin-bottom: 10px;">
-            {% trans "Was this issue actually solved?" %}
-          </p>
+    <div class="resolution-box">
+        <h3>✅ Resolution Confirmation</h3>
+        <p>Was this issue actually solved?</p>
 
-          <div class="resolution-actions">
-            <a href="{% url 'confirm_issue_solved' issue.id %}" class="btn-confirm">
-              ✅ {% trans "Confirm Solved" %}
-            </a>
+        {% if feedback %}
+            <!-- ✅ User already gave feedback -->
+            {% if feedback.is_confirmed_solved %}
+                <p style="color: #16a34a; font-weight: 700;">
+                    ✅ You already confirmed this issue as Solved.
+                </p>
+            {% else %}
+                <p style="color: #dc2626; font-weight: 700;">
+                    ❌ You already marked this issue as Not Solved.
+                </p>
+            {% endif %}
 
-            <a href="{% url 'report_issue_not_solved' issue.id %}" class="btn-reopen">
-              ❌ {% trans "Not Solved (Reopen)" %}
-            </a>
-          </div>
+        {% else %}
+            <!-- ✅ Show buttons only if no feedback yet -->
+            <div class="resolution-actions">
+
+                <form method="post" action="{% url 'confirm_issue_solved' issue.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-solved">✅ Confirm Solved</button>
+                </form>
+
+                <form method="post" action="{% url 'report_issue_not_solved' issue.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-not-solved">❌ Not Solved (Reopen)</button>
+                </form>
+
+            </div>
         {% endif %}
+    </div>
+
+{% endif %}
+
+
 
       </div>
     {% endif %}

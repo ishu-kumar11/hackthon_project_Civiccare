@@ -93,8 +93,14 @@
   flex-wrap: wrap;
 }
 
-.btn-confirm,
-.btn-reopen {
+/* make form not take full width */
+.resolution-actions form {
+  margin: 0;
+}
+
+/* ✅ Buttons base */
+.btn-solved,
+.btn-not-solved {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -105,29 +111,31 @@
   font-weight: 600;
   font-size: 14px;
 
-  text-decoration: none;
   border: none;
   cursor: pointer;
 
   transition: 0.2s ease;
+  min-width: 180px;
 }
 
-.btn-confirm {
-  background: #16a34a;   /* green */
+/* ✅ Solved = Green */
+.btn-solved {
+  background: #16a34a;
   color: white;
 }
 
-.btn-confirm:hover {
+.btn-solved:hover {
   transform: translateY(-1px);
   opacity: 0.95;
 }
 
-.btn-reopen {
-  background: #dc2626;   /* red */
+/* ✅ Not solved = Red */
+.btn-not-solved {
+  background: #dc2626;
   color: white;
 }
 
-.btn-reopen:hover {
+.btn-not-solved:hover {
   transform: translateY(-1px);
   opacity: 0.95;
 }

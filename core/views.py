@@ -50,22 +50,44 @@ def success(request, complaint_id):
 
 
 @login_required(login_url='login')
-def track_issue(request):
+def track_issue(request, complaint_id=None):
     issue = None
     error = None
+    feedback = None  # ✅ add here
 
-    if request.method == 'POST':
-        complaint_id = request.POST.get('complaint_id')
-
+    # ✅ If complaint_id comes from URL
+    if complaint_id:
         try:
             issue = Issue.objects.get(complaint_id=complaint_id)
         except Issue.DoesNotExist:
             error = "No issue found with this Complaint ID."
 
+    # ✅ If complaint_id comes from form POST also
+    if request.method == 'POST':
+        complaint_id = request.POST.get('complaint_id')
+        try:
+            issue = Issue.objects.get(complaint_id=complaint_id)
+
+            # ✅ optional: redirect to clean URL
+            return redirect("track_issue_with_id", complaint_id=issue.complaint_id)
+
+        except Issue.DoesNotExist:
+            error = "No issue found with this Complaint ID."
+
+    # ✅ If issue found, check if THIS USER already gave feedback
+    if issue and request.user.is_authenticated:
+        feedback = IssueResolutionFeedback.objects.filter(
+            issue=issue,
+            user=request.user
+        ).first()
+
     return render(request, 'core/track_issue.html', {
         'issue': issue,
-        'error': error
+        'error': error,
+        'feedback': feedback  # ✅ send to template
     })
+
+
 
 from django.db.models import Count, Q
 
@@ -148,6 +170,7 @@ import re
 def user_register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
+        email = request.POST.get('email')
         phone = request.POST.get('phone')
         pincode = request.POST.get('pincode')
         state = request.POST.get('state')
@@ -180,10 +203,18 @@ def user_register(request):
                 'error': 'Phone number already registered'
             })
 
+        if User.objects.filter(email=email).exists():
+            return render(request, 'core/register.html', {
+                'error': 'Email already registered'
+    })
+
+
         # Create user
         user = User.objects.create_user(
             username=username,
-            password=password1
+            email=email,
+            password=password1,
+
         )
 
         # ✅ CREATE profile properly
@@ -342,6 +373,10 @@ def issue_map_view(request):
 def confirm_issue_solved(request, issue_id):
     issue = get_object_or_404(Issue, id=issue_id)
 
+    if request.method != "POST":
+        return HttpResponseForbidden("Invalid request")
+
+
     # ✅ Only allow if issue is resolved
     if issue.status != "resolved":
         messages.error(request, "This issue is not marked as resolved yet.")
@@ -364,12 +399,16 @@ def confirm_issue_solved(request, issue_id):
     )
 
     messages.success(request, "✅ Thanks! You confirmed the issue is solved.")
-    return redirect("track_issue", complaint_id=issue.complaint_id)
+    return redirect("track_issue_with_id", complaint_id=issue.complaint_id)
 
 
 @login_required
 def report_issue_not_solved(request, issue_id):
     issue = get_object_or_404(Issue, id=issue_id)
+
+    if request.method != "POST":
+        return HttpResponseForbidden("Invalid request")
+
 
     # ✅ Only allow if issue is resolved
     if issue.status != "resolved":
@@ -408,4 +447,4 @@ def report_issue_not_solved(request, issue_id):
     else:
         messages.info(request, f"Feedback saved. Not solved count = {not_solved_count}")
 
-    return redirect("track_issue", complaint_id=issue.complaint_id)
+    return redirect("track_issue_with_id", complaint_id=issue.complaint_id)

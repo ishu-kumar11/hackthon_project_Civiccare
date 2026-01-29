@@ -90,6 +90,16 @@
           </span>
         </td>
         <td>
+  <div class="feedback-badges">
+    <span class="fb fb-solved">✅ {{ issue.solved_confirmations }}</span>
+    <span class="fb fb-not-solved">❌ {{ issue.not_solved_reports }}</span>
+
+    {% if issue.not_solved_reports >= 3 %}
+      <div class="fb-alert">⚠ Reopen Suggested</div>
+    {% endif %}
+  </div>
+</td>
+        <td>
           <a href="{% url 'update_issue_status' issue.id %}" class="action-link">
             Update
           </a>

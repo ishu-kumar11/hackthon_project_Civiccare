@@ -23,6 +23,17 @@
   <form method="POST" enctype="multipart/form-data" class="report-card">
     {% csrf_token %}
 
+{% if form.errors %}
+<div style="background:#ffe1e1; padding:12px; border-radius:10px; margin-bottom:12px;">
+  <b style="color:#b30000;">❌ Please fix these errors:</b>
+  <ul style="margin-top:8px;">
+    {% for error in form.non_field_errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
     <div class="form-group">
   <label>{% trans "Full Name" %}</label>
   <input
@@ -178,10 +189,45 @@
       />
     </div>
 
-    <div class="upload-box">
-      <input type="file" name="photo" />
-      <p>{% trans "Upload a clear photo (optional)" %}</p>
-    </div>
+    <!-- ✅ PHOTO UPLOAD -->
+<div class="upload-box">
+  <label style="font-weight:600;">
+    Upload Photo
+    <span id="photoRequiredText" style="color:red; font-size:13px; display:none;">
+      (Required)
+    </span>
+  </label>
+
+  <input type="file" name="photo" id="photoInput" accept="image/*" />
+
+  <p style="font-size:13px; color:#555;">
+    Max 5MB | JPG/PNG
+  </p>
+
+  <!-- Preview -->
+  <img id="photoPreview" style="max-width: 100%; margin-top:10px; display:none; border-radius:10px;" />
+</div>
+
+<!-- ✅ VIDEO UPLOAD -->
+<div class="upload-box">
+  <label style="font-weight:600;">
+    Upload Video
+    <span id="videoRequiredText" style="color:red; font-size:13px; display:none;">
+      (Required)
+    </span>
+  </label>
+
+  <input type="file" name="video" id="videoInput" accept="video/mp4" />
+
+  <p style="font-size:13px; color:#555;">
+    Max 20MB | MP4 only
+  </p>
+
+  <!-- Preview -->
+  <video id="videoPreview" controls style="max-width: 100%; margin-top:10px; display:none; border-radius:10px;"></video>
+</div>
+
+
 
     <div class="form-footer">
       <span>{% trans "Your identity stays private" %}</span>
@@ -226,6 +272,109 @@
     });
   }
 </script>
+
+<script>
+  const urgencySelect = document.querySelector("select[name='urgency']");
+
+  const photoInput = document.getElementById("photoInput");
+  const videoInput = document.getElementById("videoInput");
+
+  const photoPreview = document.getElementById("photoPreview");
+  const videoPreview = document.getElementById("videoPreview");
+
+  const photoRequiredText = document.getElementById("photoRequiredText");
+  const videoRequiredText = document.getElementById("videoRequiredText");
+
+  const MAX_PHOTO_MB = 5;
+  const MAX_VIDEO_MB = 20;
+
+  // ✅ Urgency rules dynamic required
+  function applyUrgencyRules() {
+    const urgency = urgencySelect.value;
+
+    // Default optional
+    photoInput.required = false;
+    videoInput.required = false;
+
+    photoRequiredText.style.display = "none";
+    videoRequiredText.style.display = "none";
+
+    if (urgency === "medium") {
+      photoInput.required = true;
+      photoRequiredText.style.display = "inline";
+    }
+
+    if (urgency === "high") {
+      photoInput.required = true;
+      videoInput.required = true;
+
+      photoRequiredText.style.display = "inline";
+      videoRequiredText.style.display = "inline";
+    }
+  }
+
+  urgencySelect.addEventListener("change", applyUrgencyRules);
+  applyUrgencyRules();
+
+
+  // ✅ PHOTO PREVIEW + SIZE CHECK
+  photoInput.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (!file) {
+      photoPreview.style.display = "none";
+      return;
+    }
+
+    // size validation
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > MAX_PHOTO_MB) {
+      alert("❌ Photo size must be under " + MAX_PHOTO_MB + "MB");
+      photoInput.value = "";
+      photoPreview.style.display = "none";
+      return;
+    }
+
+    // preview
+    const url = URL.createObjectURL(file);
+    photoPreview.src = url;
+    photoPreview.style.display = "block";
+  });
+
+
+  // ✅ VIDEO PREVIEW + SIZE CHECK + MP4 CHECK
+  videoInput.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (!file) {
+      videoPreview.style.display = "none";
+      return;
+    }
+
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > MAX_VIDEO_MB) {
+      alert("❌ Video size must be under " + MAX_VIDEO_MB + "MB");
+      videoInput.value = "";
+      videoPreview.style.display = "none";
+      return;
+    }
+
+    // only mp4
+    if (!file.name.toLowerCase().endsWith(".mp4")) {
+      alert("❌ Only MP4 videos allowed");
+      videoInput.value = "";
+      videoPreview.style.display = "none";
+      return;
+    }
+
+    // preview
+    const url = URL.createObjectURL(file);
+    videoPreview.src = url;
+    videoPreview.style.display = "block";
+  });
+</script>
+
+
 </body>
 
 

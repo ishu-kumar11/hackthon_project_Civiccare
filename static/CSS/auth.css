@@ -113,3 +113,61 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+
+
+.form-error {
+  background: #ffe9e9;
+  border: 1px solid #ffb3b3;
+  color: #b10000;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.form-error p {
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+
+.password-box {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.password-box input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+/* ✅ Toggle icon inside input */
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  background: transparent;
+}
+
+.toggle-password-btn:hover {
+  background: rgba(0,0,0,0.06);
+  color: #2563eb;
+}
+
+.toggle-password-btn svg {
+  pointer-events: none;
+}
+
+
+
