@@ -12,33 +12,116 @@ from django.http import JsonResponse
 from .models import Issue, IssueVote, UserProfile, IssueResolutionFeedback
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+import requests
+
 
 
 def home(request):
     return render(request, 'core/index.html')
 
 
+def reverse_geocode(lat, lon):
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {
+        "format": "json",
+        "lat": lat,
+        "lon": lon,
+        "zoom": 18,
+        "addressdetails": 1
+    }
+
+    headers = {
+        "User-Agent": "CivicCare/1.0 (contact: yourmail@example.com)"
+    }
+
+    r = requests.get(url, params=params, headers=headers, timeout=10)
+    data = r.json()
+
+    address = data.get("address", {})
+
+    return {
+        "pincode": address.get("postcode"),
+        "district": address.get("county") or address.get("state_district") or address.get("city"),
+        "location": address.get("suburb") or address.get("neighbourhood") or address.get("village") or address.get("town"),
+        "state_name": address.get("state"),
+    }
+
+
+
+
 @login_required(login_url='login')
 def report_issue(request):
     if request.method == 'POST':
         form = IssueForm(request.POST, request.FILES)
+
         if form.is_valid():
             issue = form.save(commit=False)
             issue.user = request.user
 
+            # ✅ Auto-fill geo
+            if issue.latitude and issue.longitude:
+                try:
+                    geo = reverse_geocode(issue.latitude, issue.longitude)
+
+                    if (not issue.pincode) and geo.get("pincode"):
+                        issue.pincode = geo["pincode"]
+
+                    if (not issue.district) and geo.get("district"):
+                        issue.district = geo["district"]
+
+                    if (not issue.location) and geo.get("location"):
+                        issue.location = geo["location"]
+
+                except Exception as e:
+                    print("Reverse Geo Error:", e)
+
+            # ✅ Normalize (VERY IMPORTANT)
+            issue_title = (issue.title or "").strip().lower()
+            issue_location = (issue.location or "").strip().lower()
+            issue_pincode = (issue.pincode or "").strip()
+
+            # ✅ DUPLICATE CHECK: Same Area + Same Category + Similar title
+            duplicate_issue = Issue.objects.filter(
+                status__in=["pending", "in_progress", "reopened"],
+                category=issue.category,
+                pincode=issue_pincode,
+                location__iexact=issue_location,
+                is_fake=False
+            ).filter(
+                Q(title__iexact=issue_title) |
+                Q(title__icontains=issue_title[:15]) |
+                Q(description__icontains=issue_title[:15])
+            ).first()
+
+            # ✅ If duplicate found -> MERGE + AUTO VOTE
+            if duplicate_issue:
+                IssueVote.objects.update_or_create(
+                    user=request.user,
+                    issue=duplicate_issue,
+                    defaults={"vote": True}   # ✅ Auto real vote increase
+                )
+
+                messages.success(request, "✅ Same issue already reported! Your support has been added.")
+                return redirect("track_issue_with_id", complaint_id=duplicate_issue.complaint_id)
+
+            # ✅ If NOT duplicate -> create new issue with OTP
             issue.otp = generate_otp()
             issue.otp_created_at = timezone.now()
             issue.is_verified = False
 
             issue.save()
-
             print("DEV OTP:", issue.otp)
 
             return redirect('verify_otp', issue_id=issue.id)
+
+        else:
+            print("FORM ERRORS:", form.errors)
+
     else:
         form = IssueForm()
 
     return render(request, 'core/report_issue.html', {'form': form})
+
 
 
 def success(request, complaint_id):

@@ -28,6 +28,15 @@
 <body>
 
   {% if messages %}
+  {% for message in messages %}
+    <div style="margin:10px; padding:10px; background:#eaf7ea; border-radius:10px;">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+  {% if messages %}
   <div class="msg-wrapper">
     {% for message in messages %}
       <div class="msg {{ message.tags }}">

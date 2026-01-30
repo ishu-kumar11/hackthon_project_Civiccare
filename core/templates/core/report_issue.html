@@ -6,11 +6,7 @@
 
 <link rel="stylesheet" href="{% static 'css/report_issue.css' %}">
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet/dist/leaflet.css"
-/>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <!-- ============ PAGE HEADER ============ -->
 <section class="report-header">
@@ -23,53 +19,46 @@
   <form method="POST" enctype="multipart/form-data" class="report-card">
     {% csrf_token %}
 
-{% if form.errors %}
-<div style="background:#ffe1e1; padding:12px; border-radius:10px; margin-bottom:12px;">
-  <b style="color:#b30000;">❌ Please fix these errors:</b>
-  <ul style="margin-top:8px;">
-    {% for error in form.non_field_errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
+    {% if form.errors %}
+    <div style="background:#ffe1e1; padding:12px; border-radius:10px; margin-bottom:12px;">
+      <b style="color:#b30000;">❌ Please fix these errors:</b>
+      <ul style="margin-top:8px;">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li><b>{{ field.name }}</b>: {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- ✅ BASIC DETAILS -->
+    <div class="form-group">
+      <label>{% trans "Full Name" %}</label>
+      <input type="text" name="full_name" placeholder="{% trans 'Enter your full name' %}" required />
+    </div>
 
     <div class="form-group">
-  <label>{% trans "Full Name" %}</label>
-  <input
-    type="text"
-    name="full_name"
-    placeholder="{% trans 'Enter your full name' %}"
-    required
-  />
-</div>
+      <label>{% trans "Phone Number" %}</label>
+      <div style="display:flex; gap:8px;">
+        <input type="text" value="+91" readonly style="width:60px; text-align:center;" />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="{% trans '10-digit mobile number' %}"
+          pattern="[6-9]{1}[0-9]{9}"
+          maxlength="10"
+          required
+        />
+      </div>
+      <small style="color:#666;">{% trans "Only Indian mobile numbers allowed" %}</small>
+    </div>
 
-  <div class="form-group">
-  <label>{% trans "Phone Number" %}</label>
-
-  <div style="display:flex; gap:8px;">
-    <input
-      type="text"
-      value="+91"
-      readonly
-      style="width:60px; text-align:center;"
-    />
-    <input
-      type="tel"
-      name="phone"
-      placeholder="{% trans '10-digit mobile number' %}"
-      pattern="[6-9]{1}[0-9]{9}"
-      maxlength="10"
-      required
-    />
-  </div>
-
-  <small style="color:#666;">
-    {% trans "Only Indian mobile numbers allowed" %}
-  </small>
-</div>
-
-
+    <!-- ✅ CATEGORY + URGENCY -->
     <div class="form-row">
       <div class="form-group">
         <label>{% trans "Issue Category" %}</label>
@@ -94,31 +83,46 @@
       </div>
     </div>
 
+    <!-- ✅ TITLE + DESCRIPTION -->
     <div class="form-group">
       <label>{% trans "Issue Title" %}</label>
-      <input
-        type="text"
-        name="title"
-        placeholder="{% trans 'Short title of the problem' %}"
-        required
-      />
+      <input type="text" name="title" placeholder="{% trans 'Short title of the problem' %}" required />
     </div>
 
     <div class="form-group">
       <label>{% trans "Issue Description" %}</label>
-      <textarea
-        name="description"
-        placeholder="{% trans 'Explain the issue clearly...' %}"
-        required
-      ></textarea>
+      <textarea name="description" placeholder="{% trans 'Explain the issue clearly...' %}" required></textarea>
     </div>
 
-    <!-- States -->
-    <div class="form-group">
+    <!-- ✅ LOCATION SECTION -->
+    <hr style="margin:18px 0; opacity:0.2;">
+
+    <h3 style="margin-bottom:10px;">📍 Location Details</h3>
+
+    <div id="locationStatus"
+      style="margin:10px 0; padding:10px; border-radius:10px; background:#f7f7f7; font-size:14px;">
+      📍 Detecting your location...
+    </div>
+
+    <!-- ✅ MAP -->
+    <div id="map" style="height: 380px; border-radius:14px; overflow:hidden;"></div>
+
+    <div style="margin-top:10px; font-size:13px; color:#666;">
+      <b>Latitude:</b> <span id="showLat">--</span> |
+      <b>Longitude:</b> <span id="showLng">--</span>
+      <br>
+      <small>✅ Tip: Click on map to select exact location (or drag marker).</small>
+    </div>
+
+    <!-- ✅ Hidden inputs -->
+    <input type="hidden" id="id_latitude" name="latitude">
+    <input type="hidden" id="id_longitude" name="longitude">
+
+    <!-- ✅ State -->
+    <div class="form-group" style="margin-top:15px;">
       <label>{% trans "State / Union Territory" %}</label>
       <select name="state" id="state" required>
         <option value="">{% trans "Select state / UT" %}</option>
-
         <option value="AP">{% trans "Andhra Pradesh" %}</option>
         <option value="AR">{% trans "Arunachal Pradesh" %}</option>
         <option value="AS">{% trans "Assam" %}</option>
@@ -148,7 +152,6 @@
         <option value="UT">{% trans "Uttarakhand" %}</option>
         <option value="WB">{% trans "West Bengal" %}</option>
 
-        <!-- Union Territories -->
         <option value="AN">{% trans "Andaman and Nicobar Islands" %}</option>
         <option value="CH">{% trans "Chandigarh" %}</option>
         <option value="DN">{% trans "Dadra and Nagar Haveli and Daman and Diu" %}</option>
@@ -160,18 +163,13 @@
       </select>
     </div>
 
+    <!-- ✅ District -->
     <div class="form-group">
       <label>{% trans "District" %}</label>
-      <input
-        type="text"
-        name="district"
-        id="district"
-        placeholder="{% trans 'District' %}"
-        readonly
-        required
-      />
+      <input type="text" name="district" id="district" placeholder="{% trans 'District' %}" readonly required />
     </div>
 
+    <!-- ✅ Area -->
     <div class="form-group">
       <label>{% trans "Area / Locality" %}</label>
       <select name="location" id="location" required>
@@ -179,100 +177,148 @@
       </select>
     </div>
 
+    <!-- ✅ Pincode optional -->
     <div class="form-group">
       <label>{% trans "Pincode" %}</label>
       <input
         type="text"
         name="pincode"
-        placeholder="{% trans 'Enter pincode' %}"
-        required
+        id="pincode"
+        placeholder="{% trans 'Auto-filled from map location (optional)' %}"
       />
+      <small style="color:#666;">✅ We will auto-fill this from your selected location.</small>
     </div>
 
     <!-- ✅ PHOTO UPLOAD -->
-<div class="upload-box">
-  <label style="font-weight:600;">
-    Upload Photo
-    <span id="photoRequiredText" style="color:red; font-size:13px; display:none;">
-      (Required)
-    </span>
-  </label>
+    <div class="upload-box">
+      <label style="font-weight:600;">
+        Upload Photo
+        <span id="photoRequiredText" style="color:red; font-size:13px; display:none;">
+          (Required)
+        </span>
+      </label>
 
-  <input type="file" name="photo" id="photoInput" accept="image/*" />
+      <input type="file" name="photo" id="photoInput" accept="image/*" />
 
-  <p style="font-size:13px; color:#555;">
-    Max 5MB | JPG/PNG
-  </p>
+      <p style="font-size:13px; color:#555;">Max 5MB | JPG/PNG</p>
 
-  <!-- Preview -->
-  <img id="photoPreview" style="max-width: 100%; margin-top:10px; display:none; border-radius:10px;" />
-</div>
+      <img id="photoPreview" style="max-width:100%; margin-top:10px; display:none; border-radius:10px;" />
+    </div>
 
-<!-- ✅ VIDEO UPLOAD -->
-<div class="upload-box">
-  <label style="font-weight:600;">
-    Upload Video
-    <span id="videoRequiredText" style="color:red; font-size:13px; display:none;">
-      (Required)
-    </span>
-  </label>
+    <!-- ✅ VIDEO UPLOAD -->
+    <div class="upload-box">
+      <label style="font-weight:600;">
+        Upload Video
+        <span id="videoRequiredText" style="color:red; font-size:13px; display:none;">
+          (Required)
+        </span>
+      </label>
 
-  <input type="file" name="video" id="videoInput" accept="video/mp4" />
+      <input type="file" name="video" id="videoInput" accept="video/mp4" />
 
-  <p style="font-size:13px; color:#555;">
-    Max 20MB | MP4 only
-  </p>
+      <p style="font-size:13px; color:#555;">Max 20MB | MP4 only</p>
 
-  <!-- Preview -->
-  <video id="videoPreview" controls style="max-width: 100%; margin-top:10px; display:none; border-radius:10px;"></video>
-</div>
+      <video id="videoPreview" controls style="max-width:100%; margin-top:10px; display:none; border-radius:10px;"></video>
+    </div>
 
-
-
+    <!-- ✅ SUBMIT -->
     <div class="form-footer">
       <span>{% trans "Your identity stays private" %}</span>
       <button type="submit">{% trans "Submit Issue" %}</button>
     </div>
 
-  <div id="map" style="height: 400px;"></div>
-
-  <input type="hidden" id="id_latitude" name="latitude">
-  <input type="hidden" id="id_longitude" name="longitude">
-
   </form>
 </section>
 
+<!-- ✅ Scripts -->
 <script src="{% static 'Javascript/pincode_autofill.js' %}"></script>
-
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<!-- ✅ MAP SCRIPT -->
 <script>
-  var map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+  var map = L.map('map').setView([20.5937, 78.9629], 5);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
   }).addTo(map);
 
-  var marker;
+  var marker = null;
 
-  // Auto detect user location
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
+  function setLatLng(lat, lng) {
+    document.getElementById("id_latitude").value = lat;
+    document.getElementById("id_longitude").value = lng;
 
-      map.setView([lat, lng], 15);
+    document.getElementById("showLat").innerText = lat.toFixed(6);
+    document.getElementById("showLng").innerText = lng.toFixed(6);
 
-      marker = L.marker([lat, lng]).addTo(map)
-        .bindPopup("📍 Your current location")
-        .openPopup();
+    document.getElementById("locationStatus").innerHTML =
+      "✅ Location selected successfully!";
 
-      document.getElementById("id_latitude").value = lat;
-      document.getElementById("id_longitude").value = lng;
-    });
+    if (marker) {
+      marker.setLatLng([lat, lng]);
+    } else {
+      marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+      marker.on("dragend", function (e) {
+        var pos = e.target.getLatLng();
+        setLatLng(pos.lat, pos.lng);
+      });
+    }
   }
+
+  // ✅ Auto detect user location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        map.setView([lat, lng], 16);
+        setLatLng(lat, lng);
+
+        marker.bindPopup("📍 Your current location").openPopup();
+      },
+      function (error) {
+        console.log("Location error:", error);
+        document.getElementById("locationStatus").innerHTML =
+          "❌ Location permission denied. Please click on the map to select location.";
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  } else {
+    document.getElementById("locationStatus").innerHTML =
+      "❌ Your browser does not support location. Please select manually.";
+  }
+
+  // ✅ Manual selection by clicking on map
+  map.on("click", function (e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    setLatLng(lat, lng);
+
+    if (marker) {
+      marker.bindPopup("✅ Location selected").openPopup();
+    }
+  });
+
+  // ✅ Form submit validation (location required)
+  document.querySelector("form").addEventListener("submit", function (e) {
+    const lat = document.getElementById("id_latitude").value;
+    const lng = document.getElementById("id_longitude").value;
+
+    if (!lat || !lng) {
+      e.preventDefault();
+      alert("❌ Please select your location on the map before submitting!");
+    }
+  });
 </script>
 
+<!-- ✅ YOUR EXISTING URGENCY + UPLOAD VALIDATION SCRIPT -->
 <script>
   const urgencySelect = document.querySelector("select[name='urgency']");
 
@@ -288,11 +334,9 @@
   const MAX_PHOTO_MB = 5;
   const MAX_VIDEO_MB = 20;
 
-  // ✅ Urgency rules dynamic required
   function applyUrgencyRules() {
     const urgency = urgencySelect.value;
 
-    // Default optional
     photoInput.required = false;
     videoInput.required = false;
 
@@ -316,8 +360,6 @@
   urgencySelect.addEventListener("change", applyUrgencyRules);
   applyUrgencyRules();
 
-
-  // ✅ PHOTO PREVIEW + SIZE CHECK
   photoInput.addEventListener("change", function () {
     const file = this.files[0];
 
@@ -326,7 +368,6 @@
       return;
     }
 
-    // size validation
     const fileSizeMB = file.size / (1024 * 1024);
     if (fileSizeMB > MAX_PHOTO_MB) {
       alert("❌ Photo size must be under " + MAX_PHOTO_MB + "MB");
@@ -335,14 +376,11 @@
       return;
     }
 
-    // preview
     const url = URL.createObjectURL(file);
     photoPreview.src = url;
     photoPreview.style.display = "block";
   });
 
-
-  // ✅ VIDEO PREVIEW + SIZE CHECK + MP4 CHECK
   videoInput.addEventListener("change", function () {
     const file = this.files[0];
 
@@ -359,7 +397,6 @@
       return;
     }
 
-    // only mp4
     if (!file.name.toLowerCase().endsWith(".mp4")) {
       alert("❌ Only MP4 videos allowed");
       videoInput.value = "";
@@ -367,15 +404,10 @@
       return;
     }
 
-    // preview
     const url = URL.createObjectURL(file);
     videoPreview.src = url;
     videoPreview.style.display = "block";
   });
 </script>
-
-
-</body>
-
 
 {% endblock %}

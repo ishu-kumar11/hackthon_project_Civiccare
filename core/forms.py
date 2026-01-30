@@ -21,7 +21,9 @@ class IssueForm(forms.ModelForm):
             'location',
             'pincode',
             'photo',
-            'video'
+            'video',
+            'latitude', 
+            'longitude',
         ]
 
         widgets = {
