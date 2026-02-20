@@ -44,3 +44,131 @@ Website For Hackathon/
 - CSS
 - JavaScript
 - SQLite (for development)
+
+
+
+
+
+
+
+
+# 🪟 CivicCare – Installation Guide (Windows Only)
+
+Follow these steps to run the CivicCare project on a Windows system.
+
+---
+
+## 1. Install Required Software
+
+Make sure these are installed:
+
+* **Python 3.9 or higher** → https://www.python.org/downloads/
+* **Git** → https://git-scm.com/download/win
+
+While installing Python, ✔ check **"Add Python to PATH"**
+
+---
+
+## 2. Clone the Project
+
+Open **Command Prompt** or **PowerShell** and run:
+
+git clone https://github.com/ishu-kumar11/hackthon_project_Civiccare.git
+cd hackthon_project_Civiccare
+```
+
+---
+
+## 3. Create Virtual Environment
+
+python -m venv venv
+```
+
+Activate it:
+
+venv\Scripts\activate
+```
+
+You should see `(venv)` in the terminal.
+
+---
+
+## 4. Install Dependencies
+
+requirements.txt` exists:
+
+pip install -r requirements.txt
+```
+
+```
+
+---
+
+## 5. Apply Database Migrations
+
+```bash
+python manage.py migrate
+```
+
+---
+
+## 6. Create Admin User (Superuser)
+
+```bash
+python manage.py createsuperuser
+```
+
+Enter:
+
+* Username
+* Email
+* Password
+
+---
+
+## 7. Run the Project
+
+```bash
+python manage.py runserver
+```
+
+Open browser and go to:
+
+**Main Website**
+
+```
+http://127.0.0.1:8000/
+```
+
+**Admin Panel**
+
+```
+http://127.0.0.1:8000/admin/
+```
+
+---
+
+## 8. Stop the Server
+
+Press:
+
+```
+CTRL + C
+```
+
+---
+
+## Notes
+
+* Always activate virtual environment before running project:
+
+  ```bash
+  venv\Scripts\activate
+  ```
+* Default database is SQLite (no setup needed)
+* Do not delete `venv` or project files
+
+---
+
+
+
